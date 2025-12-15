@@ -14,7 +14,7 @@
 }
 
 body {
-    background-color: var(--champagne-clair); 
+    background-color: #0f3b26;
     color: var(--vert-sapin); 
     font-family: var(--font-pro); 
 }
@@ -137,7 +137,7 @@ body {
 /* --- 3. HOME PAGE (Dashboard Pro) --- */
 
 .banner {
-    background: var(--vert-sapin); /* Bannière Pleine Couleur Sapin */
+    /*background: var(--vert-sapin); /* Bannière Pleine Couleur Sapin */
     color: var(--champagne-clair);
     border-radius: 20px; 
     padding: 2rem;
@@ -1006,7 +1006,7 @@ color: #013220;
 .details-heading {
     font-family: var(--font-elegant);
     font-size: 3rem;
-    color: var(--vert-sapin);
+    color: #e8e8e8; /*var(--vert-sapin);*/
     margin-bottom: 2rem;
 }
 
@@ -1050,7 +1050,7 @@ color: #013220;
 }
 .btn-details-action:hover {
     background-color: var(--dore-accent);
-    color: var(--vert-sapin);
+    color: #e8e8e8; /*var(--vert-sapin);*/
 }
 
 /* Ajoutez ce bloc à la fin de votre fichier mariage.css */
@@ -1071,7 +1071,7 @@ color: #013220;
     border-radius: 20px;
     padding: 30px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-    border-left: 5px solid var(--vert-sapin);
+    border-left: 5px solid #e8e8e8; /*var(--vert-sapin);*/
 }
 
 /* Bloc des Missions/Indices (élément clé) */
@@ -1121,3 +1121,4 @@ color: #013220;
     background-color: var(--vert-sapin);
     color: var(--champagne-clair);
 }
+

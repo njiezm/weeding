@@ -24,7 +24,7 @@
             </p>
         </div>
         
-        <h3 class="fw-bold text-center mb-4" style="color:var(--vert-sapin); font-family:var(--font-pro);">
+        <h3 class="fw-bold text-center mb-4" style="color:#e8e8e8; /*var(--vert-sapin);*/ font-family:var(--font-pro);">
             Le Livret de Cérémonie Digital
         </h3>
 

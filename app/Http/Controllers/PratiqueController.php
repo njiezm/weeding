@@ -17,9 +17,9 @@ class PratiqueController extends Controller
                 (object)['nom' => 'Le Grand Hôtel du Bonheur', 'adresse' => '1 Rue de la Joie', 'tel' => '+33 1 23 45 67 89', 'link' => '#'],
                 (object)['nom' => 'Résidence Les Palmiers', 'adresse' => 'Avenue des Cocotiers', 'tel' => '+33 9 87 65 43 21', 'link' => '#'],
             ],
-            'contact_mariage' => 'Margot (Wedding Planner)',
-            'contact_tel' => '+33 6 11 22 33 44',
-            'contact_email' => 'contact@mariage-maeva-gilles.fr',
+            'contact_mariage' => 'Jade (Personne Ressource)',
+            'contact_tel' => '+596 696 11 22 33 44',
+            'contact_email' => 'contact-mariage-maeva-gilles@njiezm.fr',
         ];
 
         return view('pages.details-pratiques', $data);

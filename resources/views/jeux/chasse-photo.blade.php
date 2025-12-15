@@ -8,7 +8,7 @@
 <div class="row justify-content-center">
     <div class="col-lg-8">
 
-        <p class="text-center lead mb-4 fw-bold" style="color:var(--vert-sapin);">
+        <p class="text-center lead mb-4 fw-bold" style="color:#e8e8e8; /*var(--vert-sapin);*/">
             Votre mission : immortaliser les moments et les objets cachés !
         </p>
         

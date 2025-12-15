@@ -82,7 +82,7 @@
 
         </ul>
 
-        <p class="text-center mt-5 p-3 fs-5" style="border-top: 1px solid var(--vert-tres-clair);">
+        <p class="text-center mt-5 p-3 fs-5" style="border-top: 1px solid var(--vert-tres-clair); color:#e8e8e8; /*var(--vert-sapin);*/">
             <i class="fa-solid fa-heart me-2" style="color: var(--dore-accent);"></i> Et l'aventure continue...
         </p>
         

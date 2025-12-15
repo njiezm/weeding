@@ -2,7 +2,7 @@
 @section('content')
 
 <h2 class="text-center details-heading">
-    Détails Pratiques & Logistique 🗺️
+    Détails Pratiques & Logistique
 </h2>
 
 <div class="row justify-content-center">
@@ -31,15 +31,15 @@
 
             <div class="info-item">
                 <i class="fa-solid fa-bus me-2"></i>
-                **Navettes :** Des navettes seront prévues entre l'église et la réception après la cérémonie. Les horaires seront affichés à l'église.
+                <strong>Navettes :</strong> Des navettes seront prévues entre l'église et la réception après la cérémonie. Les horaires seront affichés à l'église.
             </div>
             <div class="info-item">
                 <i class="fa-solid fa-square-parking me-2"></i>
-                **Parking :** Un grand parking gratuit sera disponible à proximité immédiate du Domaine [Nom du Domaine].
+                <strong>Parking :</strong> Un grand parking gratuit sera disponible à proximité immédiate du Domaine [Nom du Domaine].
             </div>
             <div class="info-item">
                 <i class="fa-solid fa-taxi me-2"></i>
-                **Taxis :** Liste des compagnies de taxis locales : [Lien vers un PDF/une liste].
+                <strong>Taxis :</strong> Liste des compagnies de taxis locales : [Lien vers un PDF/une liste].
             </div>
         </div>
         
@@ -60,7 +60,7 @@
             <h3 class="fw-bold"><i class="fa-solid fa-headset me-2"></i> Contacts d'Urgence / Logistique</h3>
             
             <p class="text-muted">
-                Si vous avez une question de dernière minute le jour J, veuillez contacter notre organisatrice :
+                Si vous avez une question de dernière minute le jour J, veuillez contacter notre coordinatrice :
             </p>
             <div class="info-item fw-bold">
                 <i class="fa-solid fa-user me-2"></i> {{ $contact_mariage }}
