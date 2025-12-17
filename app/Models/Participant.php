@@ -8,11 +8,14 @@ class Participant extends Model
 {
     protected $fillable = [
         'nom',
-        'prenom'
+        'prenom',
+        'email',
+        'telephone',
+        'equipe'
     ];
 
-    public function livreOrs()
+    public function reponses()
     {
-        return $this->hasMany(LivreOr::class);
+        return $this->hasMany(ReponseQuiDeux::class);
     }
 }

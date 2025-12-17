@@ -14,7 +14,7 @@
         </div>
         @endif
 
-        <form method="POST" class="game-card">
+        <form method="POST" action="{{ route('jeux.submitQuiDeux') }}" class="game-card">
             @csrf
             
             <h4 class="text-center mb-4 fw-bold" style="color:var(--vert-sapin); font-family:var(--font-pro);">
@@ -30,7 +30,10 @@
                 </div>
             </div>
 
-            <div id="qui2Carousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="false">
+            <input type="hidden" name="session_jeu_id" value="{{ $sessionActive->id }}">
+
+            <!-- Supprimé data-bs-ride="carousel" et gardé data-bs-interval="false" -->
+            <div id="qui2Carousel" class="carousel slide" data-bs-interval="false">
                 <div class="carousel-inner">
                     @foreach($questions as $index => $question)
                     <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
@@ -39,13 +42,13 @@
                             
                             <div class="answer-options mt-4">
                                 
-                                <input type="radio" id="gilles_{{ $index }}" name="answers[{{ $index }}]" value="Gilles" required>
-                                <label for="gilles_{{ $index }}">
+                                <input type="radio" id="gilles_{{ $question->id }}" name="answers[{{ $question->id }}]" value="Gilles" required>
+                                <label for="gilles_{{ $question->id }}">
                                     Gilles
                                 </label>
                                 
-                                <input type="radio" id="maeva_{{ $index }}" name="answers[{{ $index }}]" value="Maëva" required>
-                                <label for="maeva_{{ $index }}">
+                                <input type="radio" id="maeva_{{ $question->id }}" name="answers[{{ $question->id }}]" value="Maëva" required>
+                                <label for="maeva_{{ $question->id }}">
                                     Maëva
                                 </label>
                                 
@@ -105,6 +108,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Vérifie au chargement initial
     checkSlide();
+    
+    // Initialiser le carrousel manuellement sans défilement automatique
+    const carouselInstance = new bootstrap.Carousel(carousel, {
+        interval: false,
+        ride: false
+    });
 });
 </script>
 

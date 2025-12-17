@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('jeu_qui_deuxes');
+        Schema::dropIfExists('jeu_qui_deux');
     }
 };

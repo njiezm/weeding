@@ -9,7 +9,10 @@ class UrneDon extends Model
     protected $fillable = [
         'participant_id',
         'montant',
-        'message'
+        'message',
+        'moyen_paiement',
+        'statut',
+        'transaction_id'
     ];
 
     public function participant()

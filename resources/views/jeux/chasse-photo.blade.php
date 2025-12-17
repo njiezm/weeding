@@ -8,7 +8,7 @@
 <div class="row justify-content-center">
     <div class="col-lg-8">
 
-        <p class="text-center lead mb-4 fw-bold" style="color:#e8e8e8; /*var(--vert-sapin);*/">
+        <p class="text-center lead mb-4 fw-bold" style="color:#e8e8e8;">
             Votre mission : immortaliser les moments et les objets cachés !
         </p>
         
@@ -47,8 +47,12 @@
                 Soumettre un Indice Trouvé
             </h4>
 
-            <form method="POST" action="{{ route('jeux.chasse-photo.submit') }}" enctype="multipart/form-data">
+            <!-- L'action de la route est mise à jour -->
+            <form method="POST" action="{{ route('jeux.submitChassePhoto') }}" enctype="multipart/form-data">
                 @csrf
+
+                <!-- AJOUT DU CHAMP CACHÉ POUR LA SESSION -->
+                <input type="hidden" name="session_jeu_id" value="{{ $sessionActive->id }}">
 
                 <div class="row mb-3 g-2">
                     <div class="col-md-6">
@@ -61,8 +65,14 @@
 
                 <div class="mb-3">
                     <label for="indice" class="form-label fw-bold text-muted">Nom de l'indice que vous soumettez :</label>
-                    <input type="text" class="form-control form-control-lg" name="indice" 
-                           placeholder="Ex: Mission 1 : L'objet le plus ancien" required>
+                    <select class="form-select form-control-lg" name="indice" id="indice" required>
+                        <option value="" selected disabled>Choisissez une mission...</option>
+                        <option value="Mission 1 : L'objet le plus ancien de la salle">Mission 1 : L'objet le plus ancien de la salle</option>
+                        <option value="Mission 2 : Un selfie avec quelqu'un que vous venez de rencontrer">Mission 2 : Un selfie avec quelqu'un que vous venez de rencontrer</option>
+                        <option value="Mission 3 : La meilleure vue du ciel au Domaine">Mission 3 : La meilleure vue du ciel au Domaine</option>
+                        <option value="Mission 4 : Un verre de Maëva et la pochette de Gilles (où se trouvent-ils ?)">Mission 4 : Un verre de Maëva et la pochette de Gilles (où se trouvent-ils ?)</option>
+                        <option value="Mission 5 : Le détail décoratif que vous préférez">Mission 5 : Le détail décoratif que vous préférez</option>
+                    </select>
                 </div>
 
                 <div class="mb-4">
