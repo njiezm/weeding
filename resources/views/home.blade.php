@@ -26,6 +26,10 @@ $menuItems = [
     // Bloc Jeux (pour l'engagement)
     ['Qui de nous 2 ?', '/jeux/qui-de-nous-2', 'fa-question', 'Testez vos connaissances !', 'col-sm-6 col-md-4'],
     ['Chasse Photo', '/jeux/chasse-photo', 'fa-magnifying-glass-chart', 'Un jeu amusant pour la journée.', 'col-sm-6 col-md-4'],
+
+    // Ajoutez ces éléments au tableau $menuItems
+    ['Mots Croisés', '/jeux/mots-croises', 'fa-puzzle-piece', 'Testez vos connaissances !', 'col-sm-6 col-md-4'],
+    ['Memory', '/jeux/memory', 'fa-brain', 'Retrouvez les paires de photos !', 'col-sm-6 col-md-4'],
 ];
 @endphp
 

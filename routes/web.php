@@ -51,6 +51,14 @@ Route::post('/jeux/qui-deux', [JeuxController::class, 'submitQuiDeux'])->name('j
 Route::get('/jeux/resultats/{session}', [JeuxController::class, 'resultats'])->name('jeux.resultats');
 Route::get('/jeux/chasse-photo', [JeuxController::class, 'chassePhoto'])->name('jeux.chassePhoto');
 Route::post('/jeux/chasse-photo', [JeuxController::class, 'submitChassePhoto'])->name('jeux.submitChassePhoto');
+// Routes pour les nouveaux jeux
+Route::get('/jeux/mots-croises', [JeuxController::class, 'motsCroises'])->name('jeux.motsCroises');
+Route::post('/jeux/mots-croises', [JeuxController::class, 'submitMotsCroises'])->name('jeux.submitMotsCroises');
+Route::get('/jeux/resultats-mots-croises', [JeuxController::class, 'resultatsMotsCroises'])->name('jeux.resultatsMotsCroises');
+Route::get('/jeux/memory', [JeuxController::class, 'memory'])->name('jeux.memory');
+Route::post('/jeux/memory', [JeuxController::class, 'submitMemory'])->name('jeux.submitMemory');
+Route::get('/jeux/resultats-memory', [JeuxController::class, 'resultatsMemory'])->name('jeux.resultatsMemory');
+
 
 // Routes pour l'administration
 Route::prefix('admin')->name('admin.')->group(function () {
@@ -72,6 +80,47 @@ Route::prefix('admin')->name('admin.')->group(function () {
     // Gestion de la chasse photo
     Route::get('/chasse-photos/{session}', [AdminController::class, 'chassePhotosSubmissions'])->name('chassePhotosSubmissions');
     Route::post('/chasse-photos/{chassePhoto}/validate', [AdminController::class, 'validateChassePhoto'])->name('validateChassePhoto');
+
+    // Gestion des étapes de la cérémonie
+    Route::get('/etapes-ceremonie', [AdminController::class, 'etapesCeremonie'])->name('etapesCeremonie');
+    Route::post('/etapes-ceremonie', [AdminController::class, 'storeEtapeCeremonie'])->name('storeEtapeCeremonie');
+    Route::put('/etapes-ceremonie/{etape}', [AdminController::class, 'updateEtapeCeremonie'])->name('updateEtapeCeremonie');
+    Route::delete('/etapes-ceremonie/{etape}', [AdminController::class, 'deleteEtapeCeremonie'])->name('deleteEtapeCeremonie');
+    Route::post('/etapes-ceremonie/{etape}/en-cours', [AdminController::class, 'marquerEnCours'])->name('marquerEnCours');
+    Route::post('/etapes-ceremonie/{etape}/terminer', [AdminController::class, 'marquerTermine'])->name('marquerTermine');
+    Route::post('/etapes-ceremonie/{etape}/non-terminer', [AdminController::class, 'marquerNonTermine'])->name('marquerNonTermine');
+
+
+    //
+    // Routes pour les mots croisés
+    Route::get('/mots-croises', [AdminController::class, 'motsCroises'])->name('motsCroises');
+    Route::post('/mots-croises', [AdminController::class, 'storeMotsCroises'])->name('storeMotsCroises');
+    Route::get('/mots-croises/{motsCroises}/edit', [AdminController::class, 'editMotsCroises'])->name('editMotsCroises');
+    Route::put('/mots-croises/{motsCroises}', [AdminController::class, 'updateMotsCroises'])->name('updateMotsCroises');
+    Route::post('/mots-croises/{motsCroises}/mots', [AdminController::class, 'storeMot'])->name('storeMot');
+    Route::put('/mots/{mot}', [AdminController::class, 'updateMot'])->name('updateMot');
+    Route::delete('/mots/{mot}', [AdminController::class, 'deleteMot'])->name('deleteMot');
+    
+    // Routes pour les cartes memory
+    Route::get('/memory-cards', [AdminController::class, 'memoryCards'])->name('memoryCards');
+    Route::post('/memory-cards', [AdminController::class, 'storeMemoryCard'])->name('storeMemoryCard');
+    Route::put('/memory-cards/{card}', [AdminController::class, 'updateMemoryCard'])->name('updateMemoryCard');
+    Route::delete('/memory-cards/{card}', [AdminController::class, 'deleteMemoryCard'])->name('deleteMemoryCard');
+    
+    // Routes pour les jeux
+    Route::get('/mots-croises', [AdminController::class, 'motsCroises'])->name('motsCroises');
+    Route::post('/mots-croises', [AdminController::class, 'storeMotsCroises'])->name('storeMotsCroises');
+    Route::get('/mots-croises/{motsCroises}/edit', [AdminController::class, 'editMotsCroises'])->name('editMotsCroises');
+    Route::put('/mots-croises/{motsCroises}', [AdminController::class, 'updateMotsCroises'])->name('updateMotsCroises');
+    Route::post('/mots-croises/{motsCroises}/mots', [AdminController::class, 'storeMot'])->name('storeMot');
+    Route::put('/mots/{mot}', [AdminController::class, 'updateMot'])->name('updateMot');
+    Route::delete('/mots/{mot}', [AdminController::class, 'deleteMot'])->name('deleteMot');
+    
+    // Routes pour les cartes memory
+    Route::get('/memory-cards', [AdminController::class, 'memoryCards'])->name('memoryCards');
+    Route::post('/memory-cards', [AdminController::class, 'storeMemoryCard'])->name('storeMemoryCard');
+    Route::put('/memory-cards/{card}', [AdminController::class, 'updateMemoryCard'])->name('updateMemoryCard');
+    Route::delete('/memory-cards/{card}', [AdminController::class, 'deleteMemoryCard'])->name('deleteMemoryCard');
 
     // Résultats
     Route::get('/resultats/{session}', [AdminController::class, 'resultats'])->name('resultats');

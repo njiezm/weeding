@@ -31,6 +31,8 @@
                                 <option value="">Sélectionner...</option>
                                 <option value="qui_deux">Qui de nous deux ?</option>
                                 <option value="chasse_photo">Chasse au trésor photo</option>
+                                <option value="mots_croises">Mots croisés</option>
+                                <option value="memory">Memory</option>
                                 <option value="autre">Autre</option>
                             </select>
                         </div>
@@ -84,14 +86,31 @@
                                             <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editModal{{ $session->id }}">
                                                 <i class="fa-solid fa-edit"></i> Modifier
                                             </button>
-                                            <a href="{{ route('admin.resultats', $session->id) }}" class="btn btn-sm btn-outline-info">
-                                                <i class="fa-solid fa-chart-bar"></i> Résultats
-                                            </a>
+                                            
+                                            @if($session->type_jeu === 'qui_deux')
+                                                <a href="{{ route('admin.resultats', $session->id) }}" class="btn btn-sm btn-outline-info">
+                                                    <i class="fa-solid fa-chart-bar"></i> Résultats
+                                                </a>
+                                            @endif
+                                            
                                             @if($session->type_jeu === 'chasse_photo')
                                                 <a href="{{ route('admin.chassePhotosSubmissions', $session->id) }}" class="btn btn-sm btn-outline-info">
                                                     <i class="fa-solid fa-images"></i> Voir les photos
                                                 </a>
                                             @endif
+                                            
+                                            @if($session->type_jeu === 'mots_croises')
+                                                <a href="{{ route('admin.editMotsCroises', $session->id) }}" class="btn btn-sm btn-outline-info">
+                                                    <i class="fa-solid fa-puzzle-piece"></i> Gérer les mots
+                                                </a>
+                                            @endif
+                                            
+                                            @if($session->type_jeu === 'memory')
+                                                <a href="{{ route('admin.memoryCards') }}" class="btn btn-sm btn-outline-info">
+                                                    <i class="fa-solid fa-brain"></i> Gérer les cartes
+                                                </a>
+                                            @endif
+                                            
                                             @if($session->actif)
                                                 <form action="{{ route('admin.arreterSession', $session->id) }}" method="POST" class="d-inline">
                                                     @csrf
@@ -149,6 +168,8 @@
                         <select class="form-select" id="type_jeu_{{ $session->id }}" name="type_jeu" required>
                             <option value="qui_deux" {{ $session->type_jeu === 'qui_deux' ? 'selected' : '' }}>Qui de nous deux ?</option>
                             <option value="chasse_photo" {{ $session->type_jeu === 'chasse_photo' ? 'selected' : '' }}>Chasse au trésor photo</option>
+                            <option value="mots_croises" {{ $session->type_jeu === 'mots_croises' ? 'selected' : '' }}>Mots croisés</option>
+                            <option value="memory" {{ $session->type_jeu === 'memory' ? 'selected' : '' }}>Memory</option>
                             <option value="autre" {{ $session->type_jeu === 'autre' ? 'selected' : '' }}>Autre</option>
                         </select>
                     </div>
@@ -161,8 +182,6 @@
         </div>
     </div>
 </div>
-
-
 @endforeach
 
 @endsection

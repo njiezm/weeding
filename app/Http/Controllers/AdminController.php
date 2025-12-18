@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 use App\Models\QuestionQuiDeux;
 use App\Models\SessionJeu;
 use App\Models\ReponseQuiDeux;
+use App\Models\EtapeCeremonie;
+use App\Models\MotsCroises;
+use App\Models\MotCroise;
+use App\Models\MemoryCard;
+
 
 class AdminController extends Controller
 {
@@ -70,38 +75,38 @@ class AdminController extends Controller
     }
 
     public function storeSession(Request $request)
-    {
-        $request->validate([
-            'nom' => 'required|string',
-            'description' => 'nullable|string',
-            'type_jeu' => 'required|in:qui_deux,chasse_photo,autre',
-        ]);
+{
+    $request->validate([
+        'nom' => 'required|string',
+        'description' => 'nullable|string',
+        'type_jeu' => 'required|in:qui_deux,chasse_photo,mots_croises,memory,autre',
+    ]);
 
-        SessionJeu::create([
-            'nom' => $request->nom,
-            'description' => $request->description,
-            'type_jeu' => $request->type_jeu,
-        ]);
+    SessionJeu::create([
+        'nom' => $request->nom,
+        'description' => $request->description,
+        'type_jeu' => $request->type_jeu,
+    ]);
 
-        return back()->with('success', 'Session créée avec succès !');
-    }
+    return back()->with('success', 'Session créée avec succès !');
+}
 
-    public function updateSession(Request $request, SessionJeu $session)
-    {
-        $request->validate([
-            'nom' => 'required|string',
-            'description' => 'nullable|string',
-            'type_jeu' => 'required|in:qui_deux,chasse_photo,autre',
-        ]);
+   public function updateSession(Request $request, SessionJeu $session)
+{
+    $request->validate([
+        'nom' => 'required|string',
+        'description' => 'nullable|string',
+        'type_jeu' => 'required|in:qui_deux,chasse_photo,mots_croises,memory,autre',
+    ]);
 
-        $session->update([
-            'nom' => $request->nom,
-            'description' => $request->description,
-            'type_jeu' => $request->type_jeu,
-        ]);
+    $session->update([
+        'nom' => $request->nom,
+        'description' => $request->description,
+        'type_jeu' => $request->type_jeu,
+    ]);
 
-        return back()->with('success', 'Session mise à jour avec succès !');
-    }
+    return back()->with('success', 'Session mise à jour avec succès !');
+}
 
     public function lancerSession(SessionJeu $session)
     {
@@ -177,5 +182,260 @@ class AdminController extends Controller
         
         $status = $chassePhoto->valide ? 'validée' : 'invalidée';
         return back()->with('success', "La photo a été {$status} avec succès !");
+    }
+
+            /**
+         * Affiche la page de gestion des étapes de la cérémonie
+         */
+        public function etapesCeremonie()
+        {
+            $etapes = EtapeCeremonie::orderBy('ordre')->get();
+            return view('admin.etapes-ceremonie', compact('etapes'));
+        }
+
+        /**
+         * Stocke une nouvelle étape de cérémonie
+         */
+        public function storeEtapeCeremonie(Request $request)
+        {
+            $request->validate([
+                'titre' => 'required|string|max:255',
+                'description' => 'nullable|string',
+                'icone' => 'nullable|string|max:50',
+                'ordre' => 'required|integer|min:0',
+            ]);
+
+            EtapeCeremonie::create([
+                'titre' => $request->titre,
+                'description' => $request->description,
+                'icone' => $request->icone,
+                'ordre' => $request->ordre,
+            ]);
+
+            return back()->with('success', 'Étape ajoutée avec succès !');
+        }
+
+        /**
+         * Met à jour une étape de cérémonie
+         */
+        public function updateEtapeCeremonie(Request $request, EtapeCeremonie $etape)
+        {
+            $request->validate([
+                'titre' => 'required|string|max:255',
+                'description' => 'nullable|string',
+                'icone' => 'nullable|string|max:50',
+                'ordre' => 'required|integer|min:0',
+            ]);
+
+            $etape->update([
+                'titre' => $request->titre,
+                'description' => $request->description,
+                'icone' => $request->icone,
+                'ordre' => $request->ordre,
+            ]);
+
+            return back()->with('success', 'Étape mise à jour avec succès !');
+        }
+
+        /**
+         * Supprime une étape de cérémonie
+         */
+        public function deleteEtapeCeremonie(EtapeCeremonie $etape)
+        {
+            $etape->delete();
+            return back()->with('success', 'Étape supprimée avec succès !');
+        }
+
+        /**
+         * Marque une étape comme étant en cours
+         */
+        public function marquerEnCours(EtapeCeremonie $etape)
+        {
+            // Désactiver toutes les autres étapes
+            EtapeCeremonie::where('id', '!=', $etape->id)->update(['en_cours' => false]);
+            
+            // Marquer cette étape comme en cours
+            $etape->update(['en_cours' => true]);
+            
+            return back()->with('success', 'Étape marquée comme en cours !');
+        }
+
+        /**
+         * Marque une étape comme terminée
+         */
+        public function marquerTermine(EtapeCeremonie $etape)
+        {
+            $etape->update(['termine' => true, 'en_cours' => false]);
+            
+            return back()->with('success', 'Étape marquée comme terminée !');
+        }
+
+        /**
+         * Marque une étape comme non terminée
+         */
+        public function marquerNonTermine(EtapeCeremonie $etape)
+        {
+            $etape->update(['termine' => false]);
+            
+            return back()->with('success', 'Étape marquée comme non terminée !');
+        }
+
+        // Gestion des mots croisés
+    public function motsCroises()
+    {
+        $motsCroises = MotsCroises::with('mots')->orderBy('created_at', 'desc')->get();
+        return view('admin.mots-croises', compact('motsCroises'));
+    }
+
+    public function storeMotsCroises(Request $request)
+    {
+        $request->validate([
+            'titre' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'taille' => 'required|integer|min:5|max:20',
+        ]);
+
+        $motsCroises = MotsCroises::create([
+            'titre' => $request->titre,
+            'description' => $request->description,
+            'taille' => $request->taille,
+        ]);
+
+        return redirect()->route('admin.editMotsCroises', $motsCroises->id)
+            ->with('success', 'Mots croisés créés avec succès ! Ajoutez maintenant les mots.');
+    }
+
+    public function editMotsCroises(MotsCroises $motsCroises)
+    {
+        $motsCroises->load('mots');
+        return view('admin.edit-mots-croises', compact('motsCroises'));
+    }
+
+    public function updateMotsCroises(Request $request, MotsCroises $motsCroises)
+    {
+        $request->validate([
+            'titre' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'taille' => 'required|integer|min:5|max:20',
+            'actif' => 'boolean',
+        ]);
+
+        $motsCroises->update([
+            'titre' => $request->titre,
+            'description' => $request->description,
+            'taille' => $request->taille,
+            'actif' => $request->has('actif'),
+        ]);
+
+        return back()->with('success', 'Mots croisés mis à jour avec succès !');
+    }
+
+    public function storeMot(Request $request, MotsCroises $motsCroises)
+{
+    $request->validate([
+        'mot' => 'required|string|max:255',
+        'definition' => 'required|string',
+        'position_x' => 'required|integer|min:0',
+        'position_y' => 'required|integer|min:0',
+        'direction' => 'required|in:horizontal,vertical',
+    ]);
+
+    MotCroise::create([  // Utilisez MotCroise ici
+        'mots_croise_id' => $motsCroises->id,
+        'mot' => $request->mot,
+        'definition' => $request->definition,
+        'position_x' => $request->position_x,
+        'position_y' => $request->position_y,
+        'direction' => $request->direction,
+    ]);
+
+    return back()->with('success', 'Mot ajouté avec succès !');
+}
+    public function updateMot(Request $request, MotCroise $mot)  // Utilisez MotCroise ici
+{
+    $request->validate([
+        'mot' => 'required|string|max:255',
+        'definition' => 'required|string',
+        'position_x' => 'required|integer|min:0',
+        'position_y' => 'required|integer|min:0',
+        'direction' => 'required|in:horizontal,vertical',
+    ]);
+
+    $mot->update([
+        'mot' => $request->mot,
+        'definition' => $request->definition,
+        'position_x' => $request->position_x,
+        'position_y' => $request->position_y,
+        'direction' => $request->direction,
+    ]);
+
+    return back()->with('success', 'Mot mis à jour avec succès !');
+}
+
+    public function deleteMot(MotCroise $mot)  // Utilisez MotCroise ici
+    {
+        $mot->delete();
+        return back()->with('success', 'Mot supprimé avec succès !');
+    }
+        
+
+    // Gestion des cartes memory
+    public function memoryCards()
+    {
+        $cards = MemoryCard::orderBy('pair_id')->get();
+        return view('admin.memory-cards', compact('cards'));
+    }
+
+    public function storeMemoryCard(Request $request)
+    {
+        $request->validate([
+            'titre' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:4096',
+            'pair_id' => 'required|string|max:255',
+        ]);
+
+        $path = $request->file('image')->store('public/memory-cards');
+        
+        MemoryCard::create([
+            'titre' => $request->titre,
+            'description' => $request->description,
+            'image_path' => $path,
+            'pair_id' => $request->pair_id,
+        ]);
+
+        return back()->with('success', 'Carte ajoutée avec succès !');
+    }
+
+    public function updateMemoryCard(Request $request, MemoryCard $card)
+    {
+        $request->validate([
+            'titre' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'pair_id' => 'required|string|max:255',
+            'actif' => 'boolean',
+        ]);
+
+        $card->update([
+            'titre' => $request->titre,
+            'description' => $request->description,
+            'pair_id' => $request->pair_id,
+            'actif' => $request->has('actif'),
+        ]);
+
+        // Si une nouvelle image est fournie
+        if ($request->hasFile('image')) {
+            $request->validate(['image' => 'required|image|mimes:jpeg,png,jpg,gif|max:4096']);
+            $path = $request->file('image')->store('public/memory-cards');
+            $card->update(['image_path' => $path]);
+        }
+
+        return back()->with('success', 'Carte mise à jour avec succès !');
+    }
+
+    public function deleteMemoryCard(MemoryCard $card)
+    {
+        $card->delete();
+        return back()->with('success', 'Carte supprimée avec succès !');
     }
 }

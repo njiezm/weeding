@@ -74,10 +74,61 @@
                             <i class="fa-solid fa-plus me-2"></i> Gérer les sessions
                         </a>
                     </div>
+
+                    
                 </div>
             </div>
         </div>
+
+         <div class="col-md-6 mg-bottom-20">
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title mb-0"><i class="fa-solid fa-calendar-days me-2"></i> Étapes de la cérémonie</h5>
+        </div>
+        <div class="card-body">
+            <p>Gérez les étapes de la cérémonie et suivez leur déroulement en direct.</p>
+            <div class="mt-3">
+                <a href="{{ route('admin.etapesCeremonie') }}" class="btn btn-primary">
+                    <i class="fa-solid fa-calendar-days me-2"></i> Gérer les étapes
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
         
+            <!-- Ajoutez ces blocs après les blocs existants -->
+<div class="col-md-6">
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title mb-0"><i class="fa-solid fa-puzzle-piece me-2"></i> Mots Croisés</h5>
+        </div>
+        <div class="card-body">
+            <p>Gérez les grilles de mots croisés sur le thème des mariés.</p>
+            <div class="mt-3">
+                <a href="{{ route('admin.motsCroises') }}" class="btn btn-primary">
+                    <i class="fa-solid fa-puzzle-piece me-2"></i> Gérer les mots croisés
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-6">
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title mb-0"><i class="fa-solid fa-brain me-2"></i> Memory</h5>
+        </div>
+        <div class="card-body">
+            <p>Gérez les cartes pour le jeu de memory avec les photos des mariés.</p>
+            <div class="mt-3">
+                <a href="{{ route('admin.memoryCards') }}" class="btn btn-primary">
+                    <i class="fa-solid fa-brain me-2"></i> Gérer les cartes memory
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
@@ -123,7 +174,9 @@
                 </div>
             </div>
         </div>
+       
     </div>
+
 </div>
 
 @endsection

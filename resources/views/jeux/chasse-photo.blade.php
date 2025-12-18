@@ -22,19 +22,19 @@
             <h3>Liste des Indices à Capturer</h3>
             
             <div class="mission-item">
-                <i class="fa-solid fa-camera me-2"></i> **Mission 1 :** L'objet le plus ancien de la salle.
+                <i class="fa-solid fa-camera me-2"></i> Mission 1 : L'objet le plus ancien de la salle.
             </div>
             <div class="mission-item">
-                <i class="fa-solid fa-camera me-2"></i> **Mission 2 :** Un selfie avec quelqu'un que vous venez de rencontrer.
+                <i class="fa-solid fa-camera me-2"></i> Mission 2 : Un selfie avec quelqu'un que vous venez de rencontrer.
             </div>
             <div class="mission-item">
-                <i class="fa-solid fa-camera me-2"></i> **Mission 3 :** La meilleure vue du ciel au Domaine.
+                <i class="fa-solid fa-camera me-2"></i> Mission 3 : La meilleure vue du ciel au Domaine.
             </div>
             <div class="mission-item">
-                <i class="fa-solid fa-camera me-2"></i> **Mission 4 :** Un verre de Maëva et la pochette de Gilles (où se trouvent-ils ?).
+                <i class="fa-solid fa-camera me-2"></i> Mission 4 : Un verre de Maëva et la pochette de Gilles (où se trouvent-ils ?).
             </div>
             <div class="mission-item">
-                <i class="fa-solid fa-camera me-2"></i> **Mission 5 :** Le détail décoratif que vous préférez.
+                <i class="fa-solid fa-camera me-2"></i> Mission 5 : Le détail décoratif que vous préférez.
             </div>
 
             <p class="text-center mt-3 text-muted small">

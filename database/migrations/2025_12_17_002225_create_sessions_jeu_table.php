@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nom');
             $table->text('description')->nullable();
-            $table->enum('type_jeu', ['qui_deux', 'chasse_photo', 'autre'])->default('qui_deux');
+            $table->enum('type_jeu', ['qui_deux', 'chasse_photo', 'mots_croises', 'memory', 'autre'])->default('qui_deux'); // Ajoutez les nouveaux types ici
             $table->boolean('actif')->default(false);
             $table->timestamp('debut')->nullable();
             $table->timestamp('fin')->nullable();
@@ -31,3 +31,4 @@ return new class extends Migration
         Schema::dropIfExists('sessions_jeu');  // Correction ici : était 'jeu_qui_deuxes'
     }
 };
+

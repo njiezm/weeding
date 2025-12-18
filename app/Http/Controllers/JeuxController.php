@@ -7,6 +7,9 @@ use App\Models\Participant;
 use App\Models\QuestionQuiDeux;
 use App\Models\ReponseQuiDeux;
 use App\Models\SessionJeu;
+use App\Models\MotsCroises;
+use App\Models\Mot;
+use App\Models\MemoryCard;
 
 class JeuxController extends Controller
 {
@@ -166,4 +169,148 @@ public function submitChassePhoto(Request $request)
         return back()->with('success', 'Photo envoyée avec succès ! Elle est en attente de validation.');
     }
 
+    public function motsCroises()
+    {
+        // Vérifier s'il y a une session active pour les mots croisés
+        $sessionActive = SessionJeu::where('type_jeu', 'mots_croises')->where('actif', true)->first();
+        
+        if (!$sessionActive) {
+            return view('jeux.en-attente', [
+                'message' => 'Le jeu de mots croisés n\'est pas encore lancé. Revenez plus tard !'
+            ]);
+        }
+        
+        $motsCroises = MotsCroises::where('actif', true)->with('mots')->first();
+        
+        if (!$motsCroises) {
+            return view('jeux.en-attente', [
+                'message' => 'Aucun mots croisés disponible pour le moment.'
+            ]);
+        }
+        
+        return view('jeux.mots-croises', compact('motsCroises', 'sessionActive'));
+    }
+
+    public function submitMotsCroises(Request $request)
+{
+    $request->validate([
+        'nom' => 'required',
+        'prenom' => 'required',
+        'reponses' => 'required|array',
+        'session_jeu_id' => 'required|exists:sessions_jeu,id'
+    ]);
+
+    $participant = Participant::firstOrCreate([
+        'nom' => $request->nom,
+        'prenom' => $request->prenom
+    ]);
+
+    // Récupérer la grille de mots croisés
+    $motsCroises = MotsCroises::find($request->mots_croises_id);
+    
+    if (!$motsCroises) {
+        return back()->with('error', 'Grille de mots croisés non trouvée.');
+    }
+    
+    $mots = $motsCroises->mots;
+    
+    $score = 0;
+    $total = $mots->count();
+    
+    foreach ($request->reponses as $motId => $reponse) {
+        // Vérifier que la réponse est une chaîne de caractères
+        if (is_array($reponse)) {
+            $reponse = implode('', $reponse); // Si c'est un tableau, le convertir en chaîne
+        }
+        
+        $mot = $mots->where('id', $motId)->first();
+        if ($mot && !empty($reponse)) {
+            // Comparaison insensible à la casse
+            if (strtolower(trim($reponse)) === strtolower($mot->mot)) {
+                $score++;
+            }
+        }
+    }
+
+    $pourcentage = $total > 0 ? round(($score / $total) * 100, 1) : 0;
+    
+    return redirect()->route('jeux.resultatsMotsCroises')
+        ->with('success', "Merci d'avoir participé ! Votre score : $score/$total ($pourcentage%)")
+        ->with('score', $score)
+        ->with('total', $total)
+        ->with('pourcentage', $pourcentage);
 }
+
+    // Méthode pour afficher les résultats des mots croisés
+    public function resultatsMotsCroises()
+    {
+        $score = session('score', 0);
+        $total = session('total', 0);
+        $pourcentage = session('pourcentage', 0);
+        
+        return view('jeux.resultats-mots-croises', compact('score', 'total', 'pourcentage'));
+    }
+
+    // Méthode pour le jeu de memory
+    public function memory()
+    {
+        // Vérifier s'il y a une session active pour le memory
+        $sessionActive = SessionJeu::where('type_jeu', 'memory')->where('actif', true)->first();
+        
+        if (!$sessionActive) {
+            return view('jeux.en-attente', [
+                'message' => 'Le jeu de memory n\'est pas encore lancé. Revenez plus tard !'
+            ]);
+        }
+        
+        $cards = MemoryCard::where('actif', true)->get();
+        
+        if ($cards->count() < 2) {
+            return view('jeux.en-attente', [
+                'message' => 'Pas assez de cartes pour le jeu de memory.'
+            ]);
+        }
+        
+        // Mélanger les cartes
+        $shuffledCards = $cards->shuffle();
+        
+        return view('jeux.memory', compact('shuffledCards', 'sessionActive'));
+    }
+
+    // Méthode pour soumettre le score du memory
+    public function submitMemory(Request $request)
+    {
+        $request->validate([
+            'nom' => 'required',
+            'prenom' => 'required',
+            'coups' => 'required|integer|min:1',
+            'session_jeu_id' => 'required|exists:sessions_jeu,id'
+        ]);
+
+        $participant = Participant::firstOrCreate([
+            'nom' => $request->nom,
+            'prenom' => $request->prenom
+        ]);
+
+        // Ici, vous pourriez stocker le score dans une table dédiée si nécessaire
+        // Pour l'instant, nous allons simplement afficher le résultat
+        
+        $coups = $request->coups;
+        $temps = $request->temps; // en secondes
+        
+        return redirect()->route('jeux.resultatsMemory')
+            ->with('success', "Merci d'avoir participé ! Vous avez terminé en $coups coups.")
+            ->with('coups', $coups)
+            ->with('temps', $temps);
+    }
+
+    // Méthode pour afficher les résultats du memory
+    public function resultatsMemory()
+    {
+        $coups = session('coups', 0);
+        $temps = session('temps', 0);
+        
+        return view('jeux.resultats-memory', compact('coups', 'temps'));
+    }
+}
+
