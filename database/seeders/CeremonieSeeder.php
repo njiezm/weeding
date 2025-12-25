@@ -20,10 +20,6 @@ class CeremonieSeeder extends Seeder
      */
     public function run()
     {
-        // Désactiver les contraintes de clés étrangères pour PostgreSQL
-        DB::statement('SET session_replication_role = replica;');
-        
-        // Vider les tables dans le bon ordre
         MemoryCard::truncate();
         Priere::truncate();
         Chant::truncate();

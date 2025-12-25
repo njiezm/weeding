@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use App\Models\MotsCroises;
 use App\Models\MotCroise;
 
@@ -11,12 +10,9 @@ class MotsCroisesSeeder extends Seeder
 {
     public function run()
     {
-        DB::statement('SET session_replication_role = replica;');
-
+        // Vider les tables
         MotCroise::truncate();
         MotsCroises::truncate();
-
-        DB::statement('SET session_replication_role = DEFAULT;');
 
         $motsCroises = MotsCroises::create([
             'titre' => 'Le Mariage de Maëva & Gilles',
