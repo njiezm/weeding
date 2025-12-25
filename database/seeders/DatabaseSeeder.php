@@ -24,7 +24,9 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             QuestionQuiDeuxSeeder::class,
-            EtapeCeremonieSeeder::class,
+            CeremonieSeeder::class,
+            MotsCroisesSeeder::class,
         ]);
+        
     }
 }

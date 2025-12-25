@@ -1,66 +1,152 @@
 @extends('layout')
 @section('content')
 
-<h2 class="text-center ceremony-heading">
-    Cérémonie Religieuse 💍
-</h2>
+@php
+    // Récupération de toutes les données nécessaires en une seule fois pour de meilleures performances.
+    // 1. L'étape actuellement en cours pour la bannière de statut.
+    $etapeEnCours = App\Models\EtapeCeremonie::where('en_cours', true)->first();
+    
+    // 2. Le message de remerciements général.
+    $remerciements = App\Models\Remerciement::first();
+    
+    // 3. Toutes les étapes avec leur contenu associé (lectures, chants, prières).
+    // La méthode 'with' est appelée "eager loading" et est très efficace pour éviter les requêtes multiples dans une boucle.
+    $etapes = App\Models\EtapeCeremonie::with(['lectures', 'chants', 'prieres'])->orderBy('ordre')->get();
+@endphp
 
-<div class="row">
-    <div class="col-lg-8 mx-auto">
-
-        <div class="status-banner-live text-center">
-            <i class="fa-solid fa-signal me-2"></i> 
-            <span class="fw-bold">STATUT EN DIRECT :</span> Nous sommes actuellement à l'étape : 
-            <span class="current-step">
-                @php
-                    $etapeEnCours = App\Models\EtapeCeremonie::where('en_cours', true)->first();
-                    echo $etapeEnCours ? $etapeEnCours->titre : 'En attente de début';
-                @endphp
-            </span>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="text-center ceremony-heading">
+                Cérémonie Religieuse 💍
+            </h2>
         </div>
+    </div>
 
-        <div class="location-card text-center mb-5">
-            <h4 class="fw-bold" style="color:var(--vert-sapin);">Église Sainte-Trinité du Bonheur</h4>
-            <p class="mb-1"><i class="fa-solid fa-clock me-2 text-dore-accent"></i> **Heure d'arrivée des invités :** 14h30</p>
-            <p><i class="fa-solid fa-bell me-2 text-dore-accent"></i> **Début Précis de la Cérémonie :** 15h00</p>
-            <p class="mt-3">
-                <i class="fa-solid fa-map-pin me-2 text-dore-accent"></i> Adresse : 12 Rue de l'Amour Éternel, 97220 Le Paradis.
-                <a href="#" class="btn btn-sm ms-3" style="background-color: var(--vert-sapin); color: var(--champagne-clair);">Voir sur la carte</a>
-            </p>
+    <!-- Bannière de statut en direct -->
+    <div class="row">
+        <div class="col-12">
+            <div class="status-banner-live text-center">
+                <i class="fa-solid fa-signal me-2"></i> 
+                <span class="fw-bold">STATUT EN DIRECT :</span> Nous sommes actuellement à l'étape : 
+                <span class="current-step">
+                    {{ $etapeEnCours ? $etapeEnCours->titre : 'En attente de début' }}
+                </span>
+            </div>
         </div>
-        
-        <h3 class="fw-bold text-center mb-4" style="color:#e8e8e8; font-family:var(--font-pro);">
-            Le Livret de Cérémonie Digital
-        </h3>
+    </div>
 
-        <div class="accordion ceremony-accordion" id="ceremonyAccordion">
-            @php
-                $etapes = App\Models\EtapeCeremonie::orderBy('ordre')->get();
-            @endphp
-            
-            @foreach($etapes as $index => $etape)
-            <div class="accordion-item">
-                <h2 class="accordion-header">
-                    <button class="accordion-button {{ !$etape->en_cours ? 'collapsed' : '' }}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ $etape->id }}">
-                        @if($etape->icone)
-                            <i class="{{ $etape->icone }} me-3"></i>
-                        @endif
-                        {{ $index + 1 }}. {{ $etape->titre }}
-                        
-                        @if($etape->en_cours)
-                            <span class="badge bg-primary ms-2">En cours</span>
-                        @elseif($etape->termine)
-                            <span class="badge bg-success ms-2">Terminé</span>
-                        @endif
-                    </button>
-                </h2>
-                <div id="collapse{{ $etape->id }}" class="accordion-collapse collapse {{ $etape->en_cours ? 'show' : '' }}" data-bs-parent="#ceremonyAccordion">
-                    <div class="accordion-body accordion-body-content">
-                        {!! nl2br($etape->description) !!}
-                    </div>
+    <!-- Section des remerciements (si elle existe) -->
+    @if($remerciements)
+    <div class="row mt-4">
+        <div class="col-lg-8 mx-auto">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h3>{{ $remerciements->titre }}</h3>
+                    <p>{!! nl2br($remerciements->contenu) !!}</p>
+                    <p class="fw-bold">{{ $remerciements->signatures }}</p>
                 </div>
             </div>
-            @endforeach
+        </div>
+    </div>
+    @endif
+
+    <!-- Carte d'informations sur le lieu -->
+    <div class="row mt-4">
+        <div class="col-lg-8 mx-auto">
+            <div class="location-card text-center mb-5">
+                <h4 class="fw-bold" style="color:var(--vert-sapin);">Église Sainte-Laurent du Lamentin</h4>
+                <p class="mb-1"><i class="fa-solid fa-clock me-2 text-dore-accent"></i> <strong>Heure d'arrivée des invités :</strong> 13h30</p>
+                <p><i class="fa-solid fa-bell me-2 text-dore-accent"></i> <strong>Début Précis de la Cérémonie :</strong> 14h00</p>
+                <p class="mt-3">
+                    <i class="fa-solid fa-map-pin me-2 text-dore-accent"></i> Adresse : 36 Rue Schoelcher, Le Lamentin 97232, Martinique.
+                    <a href="#" class="btn btn-sm ms-3" style="background-color: var(--vert-sapin); color: var(--champagne-clair);">Voir sur la carte</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Livret de Cérémonie Digital -->
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <h3 class="fw-bold text-center mb-4" style="color:#e8e8e8; font-family:var(--font-pro);">
+                Le Livret de Cérémonie Digital
+            </h3>
+
+            <div class="accordion ceremony-accordion" id="ceremonyAccordion">
+                @foreach($etapes as $etape)
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading{{ $etape->id }}">
+                        <button class="accordion-button {{ !$etape->en_cours ? 'collapsed' : '' }}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ $etape->id }}" aria-expanded="{{ $etape->en_cours ? 'true' : 'false' }}" aria-controls="collapse{{ $etape->id }}">
+                            @if($etape->icone)
+                                <i class="{{ $etape->icone }} me-2"></i>
+                            @endif
+                            {{ $etape->titre }}
+                            
+                            <!-- Badges de statut -->
+                            <div class="ms-auto">
+                                @if($etape->termine)
+                                    <span class="badge bg-success me-2"><i class="fa-solid fa-check me-1"></i>Terminée</span>
+                                @elseif($etape->en_cours)
+                                    <span class="badge bg-warning text-dark me-2"><i class="fa-solid fa-play me-1"></i>En cours</span>
+                                @endif
+                            </div>
+                        </button>
+                    </h2>
+                    <div id="collapse{{ $etape->id }}" class="accordion-collapse collapse {{ $etape->en_cours ? 'show' : '' }}" aria-labelledby="heading{{ $etape->id }}" data-bs-parent="#ceremonyAccordion">
+                        <div class="accordion-body">
+                            
+                            <!-- Description de l'étape -->
+                            @if($etape->description)
+                                <p>{!! nl2br($etape->description) !!}</p>
+                            @endif
+
+                            <!-- Afficher les lectures liées à cette étape -->
+                            @if($etape->lectures->count() > 0)
+                                <h4 class="mt-4">Lectures</h4>
+                                @foreach($etape->lectures as $lecture)
+                                    <div class="card mt-3">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ $lecture->titre }}</h5>
+                                            <h6 class="card-subtitle mb-2 text-muted">{{ $lecture->reference }}</h6>
+                                            <p class="card-text">{!! nl2br($lecture->contenu) !!}</p>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @endif
+
+                            <!-- Afficher les chants liés à cette étape -->
+                            @if($etape->chants->count() > 0)
+                                <h4 class="mt-4">Chants</h4>
+                                @foreach($etape->chants as $chant)
+                                    <div class="card mt-3">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ $chant->titre }}</h5>
+                                            @if($chant->auteur)<p class="card-subtitle mb-2 text-muted">{{ $chant->auteur }}</p>@endif
+                                            <pre class="card-text">{{ $chant->paroles }}</pre>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @endif
+
+                            <!-- Afficher les prières liées à cette étape -->
+                            @if($etape->prieres->count() > 0)
+                                <h4 class="mt-4">Prières</h4>
+                                @foreach($etape->prieres as $priere)
+                                    <div class="card mt-3">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ $priere->titre }}</h5>
+                                            <p class="card-text">{!! nl2br($priere->contenu) !!}</p>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @endif
+
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+            </div>
         </div>
     </div>
 </div>

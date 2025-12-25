@@ -56,7 +56,7 @@
             </form>
         </div>
         
-        <h3 class="fw-bold mb-4 text-center" style="color:var(--vert-sapin); font-family:var(--font-pro);">
+        <h3 style="color:#e8e8e8; /*var(--vert-sapin);*/" class="fw-bold mb-4 text-center" style="color:var(--vert-sapin); font-family:var(--font-pro);">
             <i class="fa-solid fa-comments me-2 text-dore-accent"></i> Messages et Vœux
         </h3>
 

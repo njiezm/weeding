@@ -62,7 +62,7 @@
                         @foreach($cards as $card)
                         <div class="col-md-4 col-lg-3 mb-4">
                             <div class="card h-100">
-                                <img src="{{ $card->image_url }}" class="card-img-top" alt="{{ $card->titre }}" style="max-height: 200px; object-fit: cover;">
+                                <img src="{{ asset($card->image_url) }}" class="card-img-top" alt="{{ $card->titre }}" style="max-height: 200px; object-fit: cover;">
                                 <div class="card-body">
                                     <h6 class="card-title">{{ $card->titre }}</h6>
                                     <p class="card-text"><small class="text-muted">Paire : {{ $card->pair_id }}</small></p>

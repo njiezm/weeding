@@ -56,7 +56,7 @@
     </form>
 </div>
 
-<h3 class="fw-bold mb-4" style="color:var(--vert-sapin);">
+<h3 style="color:#e8e8e8; /*var(--vert-sapin);*/" class="fw-bold mb-4" style="color:var(--vert-sapin);">
     <i class="fa-solid fa-camera me-2 text-dore-accent"></i> Les clichés de nos invités
 </h3>
 
@@ -80,7 +80,7 @@
 </div>
 
 @if(count($photos) == 0)
-<div class="alert alert-info text-center mt-5">
+<div style="color:#e8e8e8; /*var(--vert-sapin);*/" class="alert alert-info text-center mt-5">
     Aucune photo n'a encore été partagée. Soyez le premier !
 </div>
 @endif

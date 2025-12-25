@@ -25,9 +25,15 @@
                 Sous le soleil du Lamentin, nous nous sommes dit "Oui" pour la première fois. Entourés de nos témoins et de notre famille proche, l'émotion était palpable. La robe de Maëva, le costume de Gilles, et le cadre majestueux de la mairie rendaient cet instant inoubliable.
             </p>
             
-            <div class="photo-placeholder">
-                <i class="fa-solid fa-camera-retro me-2"></i> Photo 1 : L'arrivée à la Mairie
-            </div>
+            <div class="mairie-photo text-center my-4">
+    <img 
+        src="{{ asset('images/mairie/photo-1.png') }}" 
+        alt="Arrivée à la Mairie du Lamentin"
+        class="img-fluid rounded shadow"
+    >
+    <p style="color:#e8e8e8; /*var(--vert-sapin);*/" class="photo-caption mt-2">📸 L’arrivée à la Mairie</p>
+</div>
+
             
             <p style="color:#e8e8e8; /*var(--vert-sapin);*/">
                 Le discours du Maire [Nom du Maire fictif], à la fois solennel et plein d'humour, restera gravé dans nos mémoires. Chaque mot prononcé, chaque signature apposée sur le registre, confirmait notre engagement l'un envers l'autre.
@@ -37,17 +43,28 @@
                 Ce jour-là n'était que le premier acte. Aujourd'hui, un an plus tard, nous sommes impatients de célébrer avec vous l'acte deux : la cérémonie religieuse et la fête !
             </p>
             
-            <div class="photo-placeholder">
-                <i class="fa-solid fa-handshake me-2"></i> Photo 2 : Le OUI officiel
-            </div>
+           <div class="mairie-photo text-center my-4">
+    <img 
+        src="{{ asset('images/mairie/photo-2.png') }}" 
+        alt="Le OUI officiel à la mairie"
+        class="img-fluid rounded shadow"
+    >
+    <p style="color:#e8e8e8; /*var(--vert-sapin);*/" class="photo-caption mt-2">💍 Le OUI officiel</p>
+</div>
 
             <p style="color:#e8e8e8; /*var(--vert-sapin);*/">
                 Merci d'avoir été là (pour ceux qui y étaient) et merci d'être là maintenant. Notre amour s'est construit étape par étape, et la Mairie du Lamentin en est la fondation officielle.
             </p>
             
-            <div class="photo-placeholder">
-                <i class="fa-solid fa-ring me-2"></i> Photo 3 : La sortie des Mariés
-            </div>
+            <div class="mairie-photo text-center my-4">
+    <img 
+        src="{{ asset('images/mairie/photo-3.png') }}" 
+        alt="Sortie des mariés"
+        class="img-fluid rounded shadow"
+    >
+    <p style="color:#e8e8e8; /*var(--vert-sapin);*/" class="photo-caption mt-2">💖 La sortie des Mariés</p>
+</div>
+
             
             <hr class="my-4" style="border-top: 2px solid var(--dore-accent);">
             

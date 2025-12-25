@@ -438,4 +438,107 @@ class AdminController extends Controller
         $card->delete();
         return back()->with('success', 'Carte supprimée avec succès !');
     }
+
+    // ... (vos méthodes existantes)
+
+// === GESTION DES LECTURES ===
+public function lectures()
+{
+    $lectures = Lecture::orderBy('ordre')->get();
+    return view('admin.lectures', compact('lectures'));
+}
+
+public function storeLecture(Request $request)
+{
+    $request->validate([
+        'titre' => 'required|string|max:255',
+        'reference' => 'required|string',
+        'contenu' => 'required|string',
+        'auteur' => 'nullable|string|max:255',
+        'ordre' => 'required|integer|min:0',
+    ]);
+
+    Lecture::create($request->all());
+
+    return back()->with('success', 'Lecture ajoutée avec succès !');
+}
+
+public function updateLecture(Request $request, Lecture $lecture)
+{
+    $request->validate([
+        'titre' => 'required|string|max:255',
+        'reference' => 'required|string',
+        'contenu' => 'required|string',
+        'auteur' => 'nullable|string|max:255',
+        'ordre' => 'required|integer|min:0',
+    ]);
+
+    $lecture->update($request->all());
+
+    return back()->with('success', 'Lecture mise à jour avec succès !');
+}
+
+public function deleteLecture(Lecture $lecture)
+{
+    $lecture->delete();
+    return back()->with('success', 'Lecture supprimée avec succès !');
+}
+
+// === GESTION DES CHANTS ===
+public function chants()
+{
+    $chants = Chant::orderBy('ordre')->get();
+    return view('admin.chants', compact('chants'));
+}
+
+public function storeChant(Request $request)
+{
+    $request->validate([
+        'titre' => 'required|string|max:255',
+        'paroles' => 'required|string',
+        'auteur' => 'nullable|string|max:255',
+        'ordre' => 'required|integer|min:0',
+    ]);
+
+    Chant::create($request->all());
+
+    return back()->with('success', 'Chant ajouté avec succès !');
+}
+
+// ... (méthodes updateChant et deleteChant similaires)
+
+// === GESTION DES PRIÈRES ===
+public function prieres()
+{
+    $prieres = Priere::orderBy('ordre')->get();
+    return view('admin.prieres', compact('prieres'));
+}
+
+public function storePriere(Request $request)
+{
+    // ... (validation et création)
+}
+
+// ... (méthodes updatePriere et deletePriere similaires)
+
+// === GESTION DES REMERCIEMENTS ===
+public function remerciements()
+{
+    $remerciement = Remerciement::firstOrNew();
+    return view('admin.remerciements', compact('remerciement'));
+}
+
+public function updateRemerciements(Request $request)
+{
+    $request->validate([
+        'titre' => 'required|string|max:255',
+        'contenu' => 'required|string',
+        'signatures' => 'nullable|string|max:255',
+    ]);
+
+    $remerciement = Remerciement::firstOrCreate([]);
+    $remerciement->update($request->all());
+
+    return back()->with('success', 'Remerciements mis à jour avec succès !');
+}
 }

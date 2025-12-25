@@ -386,7 +386,7 @@ body {
 
 /* Style pour les onglets Bootstrap (Look Pro Vert Sapin/Doré) */
 .nav-menu-tabs .nav-link {
-    color: var(--vert-sapin); /* Texte Vert Sapin par défaut */
+    color: var(--champagne-clair); /* Texte Champagne */
     border: none;
     border-bottom: 3px solid transparent;
     padding: 1rem 1.5rem;
@@ -427,7 +427,7 @@ body {
 .menu-section-title {
     font-family: var(--font-elegant);
     font-size: 2rem;
-    color: var(--vert-sapin);
+    color: var(--dore-accent);
     margin-top: 0;
     margin-bottom: 1rem;
     border-bottom: 1px solid var(--vert-tres-clair);
@@ -817,7 +817,7 @@ color: #013220;
 .game-heading {
     font-family: var(--font-elegant);
     font-size: 3rem;
-    color: var(--vert-sapin);
+    color: var(--dore-accent);
     margin-bottom: 2.5rem;
 }
 
@@ -919,7 +919,7 @@ color: #013220;
 
 .urne-intro {
     font-size: 1.1rem;
-    color: var(--vert-sapin);
+    color: var(--champagne-clair);
     font-weight: 600;
     margin-bottom: 3rem;
 }
@@ -1122,3 +1122,20 @@ color: #013220;
     color: var(--champagne-clair);
 }
 
+.mairie-photo img {
+    max-height: 420px;
+    object-fit: cover;
+}
+
+.photo-caption {
+    font-size: 0.95rem;
+    color: var(--dore-accent);
+    font-style: italic;
+}
+
+.color-dot {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: inline-block;
+}

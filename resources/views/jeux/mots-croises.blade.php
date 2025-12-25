@@ -75,7 +75,12 @@
                                     @if($letterNumber == 1)
                                     <span class="cell-number">{{ $motId }}</span>
                                     @endif
-                                    <input type="text" class="cell-input" maxlength="1" name="reponses[{{ $motId }}][{{ $letterNumber - 1 }}]">
+                                    <input type="text" 
+                                           class="cell-input" 
+                                           maxlength="1" 
+                                           name="reponses[{{ $motId }}][{{ $letterNumber - 1 }}]"
+                                           data-x="{{ $x }}"
+                                           data-y="{{ $y }}">
                                 </div>
                                 @endif
                                 @endfor
@@ -90,7 +95,7 @@
                             <div class="definitions-section">
                                 <h6>Horizontalement</h6>
                                 <ul class="list-unstyled">
-                                    @foreach($motsCroises->mots->where('direction', 'horizontal') as $mot)
+                                    @foreach($motsCroises->mots->where('direction', 'horizontal')->sortBy('id') as $mot)
                                     <li><strong>{{ $mot->id }}.</strong> {{ $mot->definition }}</li>
                                     @endforeach
                                 </ul>
@@ -99,7 +104,7 @@
                             <div class="definitions-section">
                                 <h6>Verticalement</h6>
                                 <ul class="list-unstyled">
-                                    @foreach($motsCroises->mots->where('direction', 'vertical') as $mot)
+                                    @foreach($motsCroises->mots->where('direction', 'vertical')->sortBy('id') as $mot)
                                     <li><strong>{{ $mot->id }}.</strong> {{ $mot->definition }}</li>
                                     @endforeach
                                 </ul>
@@ -119,6 +124,7 @@
 </div>
 
 <style>
+/* ... Vos styles CSS restent les mêmes ... */
 .crossword-grid {
     display: inline-block;
     border: 2px solid #333;
@@ -151,6 +157,7 @@
     text-align: center;
     font-weight: bold;
     text-transform: uppercase;
+    user-select: none;
 }
 
 .cell-number {
@@ -159,6 +166,7 @@
     left: 2px;
     font-size: 10px;
     line-height: 1;
+    pointer-events: none;
 }
 
 .definitions-container {
@@ -170,5 +178,71 @@
     margin-bottom: 20px;
 }
 </style>
+
+{{-- Script pour la navigation améliorée --}}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const inputs = document.querySelectorAll('.cell-input');
+    const gridSize = 12; // Assurez-vous que cela correspond à la taille de votre grille
+
+    function findInput(x, y) {
+        if (x < 0 || x >= gridSize || y < 0 || y >= gridSize) {
+            return null;
+        }
+        return document.querySelector(`.cell-input[data-x="${x}"][data-y="${y}"]`);
+    }
+
+    inputs.forEach(input => {
+        input.addEventListener('keydown', function(event) {
+            let currentX = parseInt(this.dataset.x, 10);
+            let currentY = parseInt(this.dataset.y, 10);
+            let nextInput = null;
+
+            switch (event.key) {
+                case 'ArrowUp':
+                    event.preventDefault();
+                    nextInput = findInput(currentX, currentY - 1);
+                    break;
+                case 'ArrowDown':
+                    event.preventDefault();
+                    nextInput = findInput(currentX, currentY + 1);
+                    break;
+                case 'ArrowLeft':
+                    event.preventDefault();
+                    nextInput = findInput(currentX - 1, currentY);
+                    break;
+                case 'ArrowRight':
+                    event.preventDefault();
+                    nextInput = findInput(currentX + 1, currentY);
+                    break;
+                case 'Backspace':
+                    // Si la case est vide, on recule
+                    if (this.value === '') {
+                        event.preventDefault();
+                        nextInput = findInput(currentX - 1, currentY);
+                        if (!nextInput) { // Si on est au début d'une ligne, on essaie la ligne précédente
+                             nextInput = findInput(gridSize - 1, currentY - 1);
+                        }
+                    }
+                    break;
+                default:
+                    // Pour les autres touches, on laisse le comportement par défaut
+                    // Si la case est remplie, on avance à la droite
+                    if (this.value.length === 1 && event.key !== 'Tab') {
+                        nextInput = findInput(currentX + 1, currentY);
+                        if (!nextInput) { // Si on est en fin de ligne, on passe à la ligne suivante
+                            nextInput = findInput(0, currentY + 1);
+                        }
+                    }
+                    break;
+            }
+
+            if (nextInput) {
+                nextInput.focus();
+            }
+        });
+    });
+});
+</script>
 
 @endsection

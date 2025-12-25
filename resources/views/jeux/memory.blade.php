@@ -63,7 +63,7 @@
                                 <img src="{{ asset('images/memory-back.jpg') }}" alt="Carte mémoire">
                             </div>
                             <div class="memory-card-back">
-                                <img src="{{ $card->image_url }}" alt="{{ $card->titre }}">
+                                <img src="{{ asset($card->image_url) }}" alt="{{ $card->titre }}">
                             </div>
                         </div>
                     </div>

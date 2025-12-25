@@ -37,14 +37,9 @@ $menuItems = [
     <h2>Bienvenue dans votre Espace Mariage</h2>
     
     <div class="countdown-pro mt-4">
-        @if($daysLeft > 0)
-        <p class="mb-0 fs-5">Plus que <strong class="text-gold-accent">{{ round($daysLeft) }} jours</strong> avant le grand jour !</p>
-        @elseif($daysLeft == 0)
-        <p class="mb-0 fs-5">🎉 C’est le jour J ! Félicitations ! 🎉</p>
-        @else
-        <p class="mb-0 fs-5">Le mariage a eu lieu le {{ $weddingDate->format('d.m.Y') }}</p>
-        @endif
-    </div>
+    <p id="countdown-text" class="mb-0 fs-5 fw-semibold"></p>
+</div>
+
     
     <div class="key-info mt-4 pt-3 border-top border-opacity-25">
         <span class="d-block d-sm-inline mx-3"><i class="fa-solid fa-calendar-alt me-2 text-gold-accent"></i> 26 Décembre 2025</span>
@@ -76,5 +71,52 @@ $menuItems = [
     <i class="fa-solid fa-shirt me-2"></i> 
     <span class="fw-bold">Code Vestimentaire :</span> Chic & Champêtre. Couleur vert sapin et champagne.
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    // 🔑 Dates clés
+    const weddingStart = new Date("2025-12-26T14:00:00");
+    const receptionStart = new Date("2025-12-26T17:00:00");
+
+    const countdownEl = document.getElementById("countdown-text");
+
+    function formatTime(diff) {
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / (1000 * 60)) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+
+        return `
+            <strong class="text-gold-accent">
+                ${days}j ${hours}h ${minutes}m ${seconds}s
+            </strong>
+        `;
+    }
+
+    function updateCountdown() {
+        const now = new Date();
+
+        // 🟢 AVANT LE MARIAGE
+        if (now < weddingStart) {
+            const diff = weddingStart - now;
+            countdownEl.innerHTML = `💍 Début de la cérémonie dans ${formatTime(diff)}`;
+
+        // 🟡 ENTRE MARIAGE ET RÉCEPTION
+        } else if (now >= weddingStart && now < receptionStart) {
+            const diff = receptionStart - now;
+            countdownEl.innerHTML = `🥂 Début de la réception dans ${formatTime(diff)}`;
+
+        // 🔴 APRÈS LA RÉCEPTION
+        } else {
+            countdownEl.innerHTML = `🎉 La fête est lancée ! Profitez de ce moment magique 💖`;
+            clearInterval(timer);
+        }
+    }
+
+    updateCountdown();
+    const timer = setInterval(updateCountdown, 1000);
+});
+</script>
 
 @endsection

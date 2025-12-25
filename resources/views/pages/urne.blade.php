@@ -24,8 +24,9 @@
                 Votre Contribution
             </h4>
 
-            <form method="POST" action="{{ url('/urne/payer') }}" id="urne-form">
-                @csrf
+            <form id="urne-form">
+    @csrf
+
 
                 <div class="row mb-3 g-2">
                     <div class="col-md-6">
@@ -59,16 +60,20 @@
 
                 <div class="payment-options-box text-center">
                     <span class="fw-bold d-block mb-2">Paiement sécurisé via :</span>
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/Visa_Logo.svg" alt="Visa" class="payment-option-logo">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/1000px-Visa_Inc._logo.svg.png" alt="Visa" class="payment-option-logo">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard" class="payment-option-logo">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_Pay_logo.svg" alt="Apple Pay" class="payment-option-logo">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Apple_Pay_logo.svg/1200px-Apple_Pay_logo.svg.png" alt="Apple Pay" class="payment-option-logo">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/f/f2/Google_Pay_Logo.svg" alt="Google Pay" class="payment-option-logo">
-                    <span class="d-block mt-2 text-muted" style="font-size:0.9rem;">(Carte bancaire, Apple/Google Pay, etc. via Stripe)</span>
+                    <!--span class="d-block mt-2 text-muted" style="font-size:0.9rem;">(Carte bancaire, Apple/Google Pay, etc. via Stripe)</!--span-->
                 </div>
                 
-                <button type="submit" class="btn btn-payer w-100 mt-4">
+                <!--button type="submit" class="btn btn-payer w-100 mt-4">
                     <i class="fa-solid fa-credit-card me-2"></i> Procéder au paiement sécurisé
-                </button>
+                </!--button-->
+                <button type="submit" class="btn btn-payer w-100 mt-4">
+    <i class="fa-brands fa-paypal me-2"></i> Contribuer via PayPal
+</button>
+
             </form>
 
         </div>
@@ -87,34 +92,47 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const amountButtons = document.querySelectorAll('.btn-amount');
-    const montantInput = document.getElementById('montant-input');
 
+    const form = document.getElementById('urne-form');
+    const montantInput = document.getElementById('montant-input');
+    const amountButtons = document.querySelectorAll('.btn-amount');
+
+    // Gestion boutons montant
     amountButtons.forEach(button => {
         button.addEventListener('click', function(e) {
             e.preventDefault();
-            
-            // 1. Désélectionner tous les boutons
             amountButtons.forEach(btn => btn.classList.remove('active'));
-            
-            // 2. Sélectionner le bouton cliqué
             this.classList.add('active');
-            
-            // 3. Mettre à jour le champ de saisie avec la valeur du bouton
             montantInput.value = this.dataset.amount;
         });
     });
 
-    // 4. Désélectionner les boutons si l'utilisateur saisit manuellement
     montantInput.addEventListener('input', function() {
         amountButtons.forEach(btn => btn.classList.remove('active'));
     });
-    
-    // 5. Validation initiale: assurez-vous qu'un montant est présent au chargement
-    // Si aucun montant n'est là, mettez le premier bouton actif comme valeur par défaut pour une meilleure UX.
+
+    // Paiement PayPal.me
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const montant = montantInput.value;
+
+        if (!montant || montant <= 0) {
+            alert("Merci d’indiquer un montant valide 😊");
+            return;
+        }
+
+        // 🔴 REMPLACE PAR TON LIEN PAYPAL.ME
+        const paypalLink = "https://paypal.me/TONLIENPAYPAL/" + montant;
+
+        window.location.href = paypalLink;
+    });
+
+    // Valeur par défaut
     if (!montantInput.value) {
-        amountButtons[0].click(); 
+        amountButtons[0].click();
     }
 });
 </script>
+
 @endsection
