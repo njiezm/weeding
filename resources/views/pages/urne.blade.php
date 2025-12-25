@@ -90,7 +90,7 @@
         <span id="ibanText">FR55 2004 1010 2001 8599 8H01 753</span>
         <i class="fa-solid fa-copy ms-2"></i>
     </div>
-    <small class="text-muted d-block mb-2">Cliquez pour copier l’IBAN et choisir votre application bancaire pour effectuer le virement.</small>
+    <small class="text-muted d-block mb-2">Cliquez pour copier l’IBAN</small>
 
     <p class="fw-bold mt-3" style="color:var(--vert-sapin);">
         💌 Urne physique disponible
@@ -112,25 +112,17 @@ document.addEventListener('DOMContentLoaded', function() {
     ibanBox.addEventListener('click', async function() {
         const ibanValue = ibanText.innerText;
 
-        // Copier dans le presse-papier
         try {
             await navigator.clipboard.writeText(ibanValue);
+            // Afficher un feedback visuel sans alerte
+            ibanBox.style.backgroundColor = '#d4edda'; // vert clair
+            ibanBox.innerHTML = `<span id="ibanText">${ibanValue}</span> <i class="fa-solid fa-check ms-2"></i> Copié !`;
+            setTimeout(() => {
+                ibanBox.style.backgroundColor = '#ffffff';
+                ibanBox.innerHTML = `<span id="ibanText">${ibanValue}</span> <i class="fa-solid fa-copy ms-2"></i>`;
+            }, 2000);
         } catch (err) {
             console.error("Impossible de copier l'IBAN :", err);
-        }
-
-        // Ouvrir le sélecteur d'application (Web Share API)
-        if (navigator.share) {
-            try {
-                await navigator.share({
-                    title: 'IBAN pour virement',
-                    text: `IBAN : ${ibanValue}`,
-                });
-            } catch (err) {
-                console.error("Partage annulé ou non disponible :", err);
-            }
-        } else {
-            alert("IBAN copié ! Veuillez ouvrir votre application bancaire manuellement pour effectuer le virement.");
         }
     });
 
