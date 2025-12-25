@@ -10,6 +10,8 @@ use App\Models\EtapeCeremonie;
 use App\Models\MotsCroises;
 use App\Models\MotCroise;
 use App\Models\MemoryCard;
+use App\Models\QrCode;
+use App\Models\QrCodeScan;
 
 
 class AdminController extends Controller
@@ -35,16 +37,24 @@ class AdminController extends Controller
     // Compter les participants (à adapter selon votre modèle)
     $participantsCount = 0; // Remplacez par votre logique si vous avez un modèle Participant
     
-    return view('admin.dashboard', compact(
-        'sessions', 
-        'questions', 
-        'etapesCeremonie', 
-        'etapesEnCours', 
-        'questionsActives',
-        'motsCroisesCount', 
-        'memoryCardsCount',
-        'participantsCount'
-    ));
+     $qrCodesCount = QrCode::count();
+        $totalScansCount = QrCodeScan::count();
+        // =====================================================
+
+        return view('admin.dashboard', compact(
+            'sessions', 
+            'questionsActives', 
+            'etapesEnCours', 
+            'participantsCount',
+            'questions',
+            'etapesCeremonie',
+            'motsCroisesCount',
+            'memoryCardsCount',
+            // On ajoute les nouvelles variables à la liste
+            'qrCodesCount',
+            'totalScansCount'
+        ));
+    
 }
 
     // Gestion des questions

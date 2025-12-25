@@ -128,9 +128,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/resultats/{session}', [AdminController::class, 'resultats'])->name('resultats');
 
     // Gestion des QR Codes
-    Route::get('/qrcodes', [QrCodeController::class, 'index'])->name('qrcodes.index');
-    Route::post('/qrcodes', [QrCodeController::class, 'store'])->name('qrcodes.store');
-    Route::get('/qrcodes/{qrCode}/stats', [QrCodeController::class, 'stats'])->name('qrcodes.stats');
+    // Gestion des QR Codes
+Route::get('/qrcodes', [QrCodeController::class, 'index'])->name('qrcodes.index');
+Route::post('/qrcodes', [QrCodeController::class, 'store'])->name('qrcodes.store');
+Route::get('/qrcodes/{qrCode}/stats', [QrCodeController::class, 'stats'])->name('qrcodes.stats');
+Route::get('/qrcodes/{qrCode}/download', [QrCodeController::class, 'download'])->name('qrcodes.download');
+Route::get('/qrcodes/{scan}/logs', [QrCodeController::class, 'downloadLogs'])->name('qrcodes.downloadLogs');
     
 });
 
@@ -148,6 +151,8 @@ Route::get('/urne/cancel', [UrneController::class, 'cancel']);
 Route::post('/webhook/stripe', [UrneController::class, 'stripeWebhook']);
 
 Route::get('/details-pratiques', [PratiqueController::class, 'index'])->name('details.pratiques');
+
+
 
 
 

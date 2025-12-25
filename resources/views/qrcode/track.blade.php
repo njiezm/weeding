@@ -18,80 +18,109 @@
         <p>Redirection vers votre destination...</p>
     </div>
 
-    <!-- On inclut FingerprintJS depuis un CDN -->
-    <script src="https://fpjscdn.net/v3"></script>
-    
-    <!-- On passe les données de Laravel à JavaScript -->
     <script>
         window.qrCodeData = @json($data);
         window.csrfToken = '{{ csrf_token() }}';
     </script>
 
-    <!-- Notre script de collecte -->
     <script>
-        (async () => {
-            const data = { ...window.qrCodeData };
-            const destinationUrl = data.destination_url;
-
-            // 1. Fingerprinting
-            try {
-                const fp = await FingerprintJS.load();
-                const result = await fp.get();
-                data.fingerprint_id = result.visitorId;
-            } catch (e) {
-                console.error("FingerprintJS error:", e);
-                data.fingerprint_id = 'error';
+        document.addEventListener('DOMContentLoaded', (event) => {
+            
+            // === COLLECTEUR DE LOGS ===
+            let allLogs = [];
+            function logAndSave(level, message, data = null) {
+                const timestamp = new Date().toISOString();
+                const logEntry = `[${timestamp}] [${level}] ${message} ${data ? JSON.stringify(data) : ''}`;
+                allLogs.push(logEntry);
+                
+                if (level === 'error') {
+                    console.error(message, data);
+                } else {
+                    console.log(message, data);
+                }
             }
+            // ==========================
 
-            // 2. Résolution d'écran
-            data.screen_resolution = `${screen.width}x${screen.height}`;
+            (async () => {
+                const data = { ...window.qrCodeData };
+                const destinationUrl = data.destination_url;
 
-            // 3. Géolocalisation précise
-            if ("geolocation" in navigator) {
-                navigator.geolocation.getCurrentPosition(
-                    (position) => {
-                        data.precise_location = {
-                            lat: position.coords.latitude,
-                            lon: position.coords.longitude,
-                            accuracy: position.coords.accuracy
-                        };
-                        data.location_permission_status = 'granted';
-                        sendDataAndRedirect();
-                    },
-                    (error) => {
-                        console.error("Geolocation error:", error);
-                        data.location_permission_status = 'denied';
-                        sendDataAndRedirect();
-                    }
-                );
-            } else {
-                data.location_permission_status = 'unavailable';
-                sendDataAndRedirect();
-            }
+                logAndSave('INFO', 'DÉBUT DU PROCESSUS DE SCAN');
+                logAndSave('INFO', 'Données initiales reçues de Laravel', data);
 
-            function sendDataAndRedirect() {
-                fetch('/qr/scan/store', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': window.csrfToken
-                    },
-                    body: JSON.stringify(data)
-                })
-                .then(response => response.json())
-                .then(result => {
-                    console.log('Scan data sent:', result);
-                })
-                .catch(error => {
-                    console.error('Error sending scan data:', error);
-                })
-                .finally(() => {
-                    // Redirection finale dans tous les cas
-                    window.location.href = destinationUrl;
-                });
-            }
+                // 1. CRÉATION DE L'IDENTIFIANT
+                const userAgent = navigator.userAgent;
+                const screenResolution = `${screen.width}x${screen.height}`;
+                data.screen_resolution = screenResolution;
+                
+                try {
+                    data.fingerprint_id = btoa(userAgent + '|' + screenResolution);
+                    logAndSave('SUCCESS', 'Fingerprint ID généré', { fingerprint_id: data.fingerprint_id });
+                } catch (e) {
+                    logAndSave('ERROR', 'ERREUR lors de la génération du fingerprint', { error: e.message });
+                    data.fingerprint_id = 'fallback_' + Date.now();
+                }
+                
+                // 2. GÉOLOCALISATION (AVEC TIMEOUT)
+                if ("geolocation" in navigator) {
+                    logAndSave('INFO', 'Demande de géolocalisation en cours...');
+                    const geoOptions = { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 };
 
-        })();
+                    navigator.geolocation.getCurrentPosition(
+                        (position) => {
+                            data.precise_location = { lat: position.coords.latitude, lon: position.coords.longitude, accuracy: position.coords.accuracy };
+                            data.location_permission_status = 'granted';
+                            logAndSave('SUCCESS', 'Géolocalisation accordée', data.precise_location);
+                            sendDataAndRedirect();
+                        },
+                        (error) => {
+                            logAndSave('ERROR', 'ERREUR de géolocalisation', { code: error.code, message: error.message });
+                            if (error.code === error.TIMEOUT) {
+                                logAndSave('WARNING', 'La demande de géolocalisation a expiré (probablement bloquée par le navigateur).');
+                            }
+                            data.location_permission_status = 'denied';
+                            sendDataAndRedirect();
+                        },
+                        geoOptions
+                    );
+                } else {
+                    logAndSave('WARNING', 'Géolocalisation non disponible sur cet appareil.');
+                    data.location_permission_status = 'unavailable';
+                    sendDataAndRedirect();
+                }
+
+                function sendDataAndRedirect() {
+                    // On ajoute tous les logs collectés à l'objet qui sera envoyé
+                    data.client_logs = allLogs.join('\n');
+
+                    logAndSave('INFO', 'Préparation de l\'envoi des données. Objet final (logs non inclus).');
+                    
+                    fetch('/qr/scan/store', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': window.csrfToken },
+                        body: JSON.stringify(data)
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                           return response.text().then(text => { throw new Error(text) });
+                        }
+                        return response.json();
+                    })
+                    .then(result => {
+                        logAndSave('SUCCESS', 'Réponse JSON du serveur', result);
+                    })
+                    .catch(error => {
+                        logAndSave('ERROR', 'ERREUR pendant la requête fetch', { message: error.message });
+                    })
+                    .finally(() => {
+                        logAndSave('INFO', `Redirection vers : ${destinationUrl}`);
+                        logAndSave('INFO', 'FIN DU PROCESSUS DE SCAN');
+                        window.location.href = destinationUrl;
+                    });
+                }
+
+            })();
+        });
     </script>
 </body>
 </html>

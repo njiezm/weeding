@@ -36,7 +36,7 @@
 
             
             <p style="color:#e8e8e8; /*var(--vert-sapin);*/">
-                Le discours du Maire [Nom du Maire fictif], à la fois solennel et plein d'humour, restera gravé dans nos mémoires. Chaque mot prononcé, chaque signature apposée sur le registre, confirmait notre engagement l'un envers l'autre.
+                Le discours de l'Adjointe au Maire Claire TUNORFÉ, à la fois solennel et plein d'humour, restera gravé dans nos mémoires. Chaque mot prononcé, chaque signature apposée sur le registre, confirmait notre engagement l'un envers l'autre.
             </p>
 
             <p style="color:#e8e8e8; /*var(--vert-sapin);*/">

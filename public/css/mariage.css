@@ -1311,3 +1311,28 @@ color: #013220;
         font-size: 0.875rem;
     }
 }
+
+.qr-code-container {
+    position: relative;
+    display: inline-block;
+}
+
+.qr-logo-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 5px;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.qr-logo {
+    max-width: 50px;
+    max-height: 50px;
+}

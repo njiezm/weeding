@@ -298,6 +298,37 @@
                 </div>
             </div>
         </div>
+
+        <div class="col-12 mb-4">
+        <div class="card dashboard-card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="card-title mb-0"><i class="fa-solid fa-qrcode me-2"></i> Gestion des QR Codes</h5>
+                <a href="{{ route('admin.qrcodes.index') }}" class="btn btn-sm btn-outline-primary">Gérer</a>
+            </div>
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-md-3">
+                        <h3 class="mb-2 text-primary">{{ $qrCodesCount }}</h3>
+                        <p class="text-muted">QR Codes générés</p>
+                    </div>
+                    <div class="col-md-3">
+                        <h3 class="mb-2 text-info">{{ $totalScansCount }}</h3>
+                        <p class="text-muted">Scans au total</p>
+                    </div>
+                    <div class="col-md-3">
+                         <h3 class="mb-2 text-success">{{ $qrCodesCount > 0 ? round($totalScansCount / $qrCodesCount, 1) : 0 }}</h3>
+                        <p class="text-muted">Scans par QR Code (moyenne)</p>
+                    </div>
+                    <div class="col-md-3 d-flex align-items-center justify-content-center">
+                        <a href="{{ route('admin.qrcodes.index') }}" class="btn btn-primary">
+                            <i class="fa-solid fa-plus me-2"></i> Créer un QR Code
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     </div>
 </div>
 
