@@ -75,7 +75,6 @@
             <span class="dish-name">🧁 Desserts</span>
             <p class="dish-description">
                 • Salade de fruits frais de saison<br>
-                • Assortiment de glaces<br>
                 • Pièce montée aux fruits rouges
             </p>
         </div>
@@ -163,6 +162,7 @@
                     <i class="fa-solid fa-envelope me-2"></i> Nous Contacter
                 </a>
             </div>
+
         </div>
 
     </div>

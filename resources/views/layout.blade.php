@@ -4,20 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Gilles & Maëva | Mariage</title>
+
+    <!-- Favicon avec ton logo G&M -->
+    <link rel="icon" href="/images/logo-metg.png" type="image/png">
+    <link rel="shortcut icon" href="/images/logo-metg.png" type="image/png">
+
+    <!-- Bootstrap CSS & Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
-    <link href="/css/mariage.css" rel="stylesheet">
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- Ton CSS -->
+    <link href="/css/mariage.css" rel="stylesheet">
+
+    <!-- META Description -->
+    <meta name="description" content="Le grand jour approche ! Découvrez notre application de mariage avec infos, jeux et souvenirs.">
+
+    <!-- Open Graph (aperçu lien WhatsApp / Messenger / Facebook / Telegram) -->
+    <meta property="og:title" content="Gilles & Maëva – Notre mariage">
+    <meta property="og:description" content="Le grand jour approche ! Consultez notre application de mariage pour toutes les infos et nos jeux.">
+    <meta property="og:url" content="https://gilles-et-maeva.njiezm.fr/">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://gilles-et-maeva.njiezm.fr/images/preview-mariage.png">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Gilles & Maëva – Notre mariage">
+    <meta name="twitter:description" content="Le grand jour approche ! Consultez notre application de mariage pour toutes les infos et nos jeux.">
+    <meta name="twitter:image" content="https://gilles-et-maeva.njiezm.fr/images/preview-mariage.png">
+
+    <!-- Icône Apple pour iOS -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/logo-metg.png">
 </head>
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-light fixed-top">
     <div class="container">
         <a class="navbar-brand" href="/home">
-            <span class="logo-text">G&M</span> <!--i class="fa-solid fa-ring icon-ring"></!--i-->
+            <span class="logo-text">G&M</span>
         </a>
-        </div>
+    </div>
 </nav>
 
 <div class="main-content">

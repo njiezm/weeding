@@ -31,7 +31,7 @@
                 <i class="fa-solid fa-camera me-2"></i> Mission 3 : La meilleure vue du ciel au Domaine.
             </div>
             <div class="mission-item">
-                <i class="fa-solid fa-camera me-2"></i> Mission 4 : Un verre de Maëva et la pochette de Gilles (où se trouvent-ils ?).
+                <i class="fa-solid fa-camera me-2"></i> Mission 4 : La bague de Maëva ou la bague de Gilles (où se trouvent-elles ?).
             </div>
             <div class="mission-item">
                 <i class="fa-solid fa-camera me-2"></i> Mission 5 : Le détail décoratif que vous préférez.
@@ -70,7 +70,7 @@
                         <option value="Mission 1 : L'objet le plus ancien de la salle">Mission 1 : L'objet le plus ancien de la salle</option>
                         <option value="Mission 2 : Un selfie avec quelqu'un que vous venez de rencontrer">Mission 2 : Un selfie avec quelqu'un que vous venez de rencontrer</option>
                         <option value="Mission 3 : La meilleure vue du ciel au Domaine">Mission 3 : La meilleure vue du ciel au Domaine</option>
-                        <option value="Mission 4 : Un verre de Maëva et la pochette de Gilles (où se trouvent-ils ?)">Mission 4 : Un verre de Maëva et la pochette de Gilles (où se trouvent-ils ?)</option>
+                        <option value="Mission 4 : La bague de Maëva ou la bague de Gilles (où se trouvent-elles ?)">Mission 4 : La bague de Maëva ou la bague de Gilles (où se trouvent-elles ?)</option>
                         <option value="Mission 5 : Le détail décoratif que vous préférez">Mission 5 : Le détail décoratif que vous préférez</option>
                     </select>
                 </div>
