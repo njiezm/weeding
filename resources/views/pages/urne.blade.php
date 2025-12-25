@@ -123,7 +123,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // 🔴 REMPLACE PAR TON LIEN PAYPAL.ME
-        const paypalLink = "https://www.paypal.com/paypalme/MaevaAntiste" + montant; 
+        const paypalLink = "https://www.paypal.com/paypalme/MaevaAntiste/" + montant; 
 
         window.location.href = paypalLink;
     });
