@@ -64,7 +64,7 @@
                     <!--img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard" class="payment-option-logo"-->
                     <!--img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Apple_Pay_logo.svg/1200px-Apple_Pay_logo.svg.png" alt="Apple Pay" class="payment-option-logo"-->
                     <!--img src="https://upload.wikimedia.org/wikipedia/commons/f/f2/Google_Pay_Logo.svg" alt="Google Pay" class="payment-option-logo"-->
-                    <img src="https://newsroom.fr.paypal-corp.com/image/pp_h_rgb_logo_tn.jpg" alt="Google Pay" class="payment-option-logo">
+                    <img src="https://newsroom.fr.paypal-corp.com/image/pp_h_rgb_logo_tn.jpg" alt="Google Pay" style="height: 55px;" class="payment-option-logo">
                     <!--span class="d-block mt-2 text-muted" style="font-size:0.9rem;">(Carte bancaire, Apple/Google Pay, etc. via Stripe)</span-->
                 </div>
                 
