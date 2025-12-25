@@ -27,9 +27,6 @@ class CeremonieSeeder extends Seeder
         EtapeCeremonie::truncate();
         Remerciement::truncate();
 
-        // Réactiver les contraintes
-        DB::statement('SET session_replication_role = DEFAULT;');
-
         // === 1. Création du message de remerciements ===
         Remerciement::create([
             'titre' => 'Remerciements',
