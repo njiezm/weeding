@@ -169,9 +169,10 @@
                                     <i class="fa-solid fa-clock"></i>
                                 @endif
                             </div>
+
                             <div class="step-content">
                                 <h6>{{ $etape->titre }}</h6>
-                                <p class="small text-muted">{{ Str::limit($etape->description, 80) }}</p>
+                                <p class="small text-muted">{{ \Illuminate\Support\Str::limit($etape->description, 80) }}</p>
                             </div>
                         </div>
                         @endforeach
@@ -221,7 +222,7 @@
                                     <tbody>
                                         @foreach($questions->take(5) as $question)
                                         <tr>
-                                            <td>{{ Str::limit($question->question, 50) }}</td>
+                                            <td>{{ \Illuminate\Support\Str::limit($question->question, 50) }}</td>
                                             <td>
                                                 @if($question->active)
                                                     <span class="badge bg-success">Active</span>
@@ -301,3 +302,4 @@
 </div>
 
 @endsection
+
