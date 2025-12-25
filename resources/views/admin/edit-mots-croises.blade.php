@@ -107,7 +107,8 @@
                                 @foreach($motsCroises->mots as $mot)
                                 <tr>
                                     <td>{{ $mot->mot }}</td>
-                                    {{ \Illuminate\Support\Str::limit($mot->definition, 100) }}
+                                    <td>{{ \Illuminate\Support\Str::limit($mot->definition, 100) }}</td>
+
                                     <td>({{ $mot->position_x }}, {{ $mot->position_y }})</td>
                                     <td>{{ $mot->direction === 'horizontal' ? 'Horizontal' : 'Vertical' }}</td>
                                     <td>
