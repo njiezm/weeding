@@ -23,17 +23,19 @@
     <meta name="description" content="Le grand jour approche ! Découvrez notre application de mariage avec infos, jeux et souvenirs.">
 
     <!-- Open Graph (aperçu lien WhatsApp / Messenger / Facebook / Telegram) -->
-    <meta property="og:title" content="Gilles & Maëva – Notre mariage">
-    <meta property="og:description" content="Le grand jour approche ! Consultez notre application de mariage pour toutes les infos et nos jeux.">
-    <meta property="og:url" content="https://gilles-et-maeva.njiezm.fr/">
-    <meta property="og:type" content="website">
-    <meta property="og:image" content="https://gilles-et-maeva.njiezm.fr/images/preview-mariage.png">
+<meta property="og:title" content="Gilles & Maëva – Notre mariage">
+<meta property="og:description" content="Le grand jour approche ! Consultez notre application de mariage pour toutes les infos et nos jeux.">
+<meta property="og:url" content="{{ url('/') }}">
+<meta property="og:type" content="website">
+<meta property="og:image" content="{{ asset('images/preview-mariage.png') }}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Gilles & Maëva – Notre mariage">
-    <meta name="twitter:description" content="Le grand jour approche ! Consultez notre application de mariage pour toutes les infos et nos jeux.">
-    <meta name="twitter:image" content="https://gilles-et-maeva.njiezm.fr/images/preview-mariage.png">
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Gilles & Maëva – Notre mariage">
+<meta name="twitter:description" content="Le grand jour approche ! Consultez notre application de mariage pour toutes les infos et nos jeux.">
+<meta name="twitter:image" content="{{ asset('images/preview-mariage.png') }}">
 
     <!-- Icône Apple pour iOS -->
     <link rel="apple-touch-icon" sizes="180x180" href="/images/logo-metg.png">
