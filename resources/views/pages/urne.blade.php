@@ -59,13 +59,13 @@
                     name="montant" min="1" placeholder="00 €" required>
 
                 <div class="payment-options-box text-center">
-                    <!--span class="fw-bold d-block mb-2">Paiement sécurisé via Paypal</!--span-->
+                    <span class="fw-bold d-block mb-2">Paiement sécurisé via Paypal</span>
                     <!--img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/1000px-Visa_Inc._logo.svg.png" alt="Visa" class="payment-option-logo"-->
                     <!--img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard" class="payment-option-logo"-->
                     <!--img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Apple_Pay_logo.svg/1200px-Apple_Pay_logo.svg.png" alt="Apple Pay" class="payment-option-logo"-->
                     <!--img src="https://upload.wikimedia.org/wikipedia/commons/f/f2/Google_Pay_Logo.svg" alt="Google Pay" class="payment-option-logo"-->
                     <img src="https://newsroom.fr.paypal-corp.com/image/pp_h_rgb_logo_tn.jpg" alt="Google Pay" class="payment-option-logo">
-                    <!--span-- class="d-block mt-2 text-muted" style="font-size:0.9rem;">(Carte bancaire, Apple/Google Pay, etc. via Stripe)</!--span-->
+                    <!--span class="d-block mt-2 text-muted" style="font-size:0.9rem;">(Carte bancaire, Apple/Google Pay, etc. via Stripe)</span-->
                 </div>
                 
                 <!--button type="submit" class="btn btn-payer w-100 mt-4">
