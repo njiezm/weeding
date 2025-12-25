@@ -1,22 +1,31 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
-   public function up(): void
-{
-    Schema::table('qr_codes', function (Blueprint $table) {
-        $table->string('source')->change();
-    });
-}
+    public function up(): void
+    {
+        // Transformer la colonne source en varchar (PostgreSQL)
+        DB::statement("
+            ALTER TABLE qr_codes
+            ALTER COLUMN source TYPE VARCHAR(255) USING source::text;
+        ");
+    }
 
-public function down(): void
-{
-    Schema::table('qr_codes', function (Blueprint $table) {
-        $table->enum('source', ['tableau', 'whatsapp', 'entree', 'eglise', 'autre'])->change();
-    });
-}
+    public function down(): void
+    {
+        // Revenir à l'enum avec check constraint
+        DB::statement("
+            ALTER TABLE qr_codes
+            ALTER COLUMN source TYPE text USING source::text;
+        ");
+
+        DB::statement("
+            ALTER TABLE qr_codes
+            ADD CONSTRAINT qr_codes_source_check
+            CHECK (source IN ('tableau', 'whatsapp', 'entree', 'eglise', 'autre'))
+        ");
+    }
 };
