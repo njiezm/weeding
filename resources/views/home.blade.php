@@ -69,7 +69,7 @@ $menuItems = [
 
 <div class="dress-code-banner mt-5 p-3 text-center">
     <i class="fa-solid fa-shirt me-2"></i> 
-    <span class="fw-bold">Code Vestimentaire :</span> Chic & Champêtre. Couleur vert sapin et champagne.
+    <span class="fw-bold">Code Vestimentaire :</span> Chic & Champêtre. Couleur vert sapin et rouille.
 </div>
 
 <script>
