@@ -104,7 +104,12 @@ return [
             explode(',', (string) env('APP_PREVIOUS_KEYS', ''))
         ),
     ],
+// config/app.php
 
+'aliases' => [
+    // ... autres alias
+    'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
+],
     /*
     |--------------------------------------------------------------------------
     | Maintenance Mode Driver

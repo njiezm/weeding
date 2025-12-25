@@ -14,13 +14,38 @@ use App\Models\MemoryCard;
 
 class AdminController extends Controller
 {
-    public function dashboard()
-    {
-        $sessions = SessionJeu::orderBy('created_at', 'desc')->get();
-        $questions = QuestionQuiDeux::orderBy('created_at', 'desc')->get();
-        
-        return view('admin.dashboard', compact('sessions', 'questions'));
-    }
+   public function dashboard()
+{
+    $sessions = SessionJeu::orderBy('created_at', 'desc')->get();
+    $questions = QuestionQuiDeux::orderBy('created_at', 'desc')->get();
+    $etapesCeremonie = EtapeCeremonie::orderBy('ordre')->get();
+    
+    // Compter les étapes en cours
+    $etapesEnCours = EtapeCeremonie::where('en_cours', true)->count();
+    
+    // Compter les questions actives
+    $questionsActives = QuestionQuiDeux::where('active', true)->count();
+    
+    // Compter les mots croisés
+    $motsCroisesCount = MotsCroises::count();
+    
+    // Compter les cartes memory (paires)
+    $memoryCardsCount = MemoryCard::count() / 2;
+    
+    // Compter les participants (à adapter selon votre modèle)
+    $participantsCount = 0; // Remplacez par votre logique si vous avez un modèle Participant
+    
+    return view('admin.dashboard', compact(
+        'sessions', 
+        'questions', 
+        'etapesCeremonie', 
+        'etapesEnCours', 
+        'questionsActives',
+        'motsCroisesCount', 
+        'memoryCardsCount',
+        'participantsCount'
+    ));
+}
 
     // Gestion des questions
     public function questions()

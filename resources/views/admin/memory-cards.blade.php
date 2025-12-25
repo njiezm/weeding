@@ -4,7 +4,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-12">
-            <h1 class="h3 mb-4"><i class="fa-solid fa-brain me-2"></i> Gestion des Cartes Memory</h1>
+            <h1 style="color:#e8e8e8; /*var(--vert-sapin);*/"  class="h3 mb-4"><i class="fa-solid fa-brain me-2"></i> Gestion des Cartes Memory</h1>
         </div>
     </div>
     

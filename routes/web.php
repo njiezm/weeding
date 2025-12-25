@@ -7,10 +7,12 @@ use App\Http\Controllers\JeuxController;
 use App\Http\Controllers\UrneController;
 use App\Http\Controllers\PratiqueController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\QrCodeController;
 
 
 Route::get('/', fn() => view('landing'))->name('landing');
 
+// routes/web.php
 
 Route::get('/home', fn() => view('home'))->name('home');
 
@@ -124,7 +126,19 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     // Résultats
     Route::get('/resultats/{session}', [AdminController::class, 'resultats'])->name('resultats');
+
+    // Gestion des QR Codes
+    Route::get('/qrcodes', [QrCodeController::class, 'index'])->name('qrcodes.index');
+    Route::post('/qrcodes', [QrCodeController::class, 'store'])->name('qrcodes.store');
+    Route::get('/qrcodes/{qrCode}/stats', [QrCodeController::class, 'stats'])->name('qrcodes.stats');
+    
 });
+
+// Route PUBLIQUE pour le suivi des scans (affiche une page)
+Route::get('/qr/track/{uuid}', [QrCodeController::class, 'track'])->name('qr.track');
+
+// Route PUBLIQUE pour recevoir les données AJAX du scan
+Route::post('/qr/scan/store', [QrCodeController::class, 'storeScan'])->name('qr.scan.store');
 
 // Urne / paiements
 Route::get('/urne', [UrneController::class, 'index']);
@@ -134,3 +148,7 @@ Route::get('/urne/cancel', [UrneController::class, 'cancel']);
 Route::post('/webhook/stripe', [UrneController::class, 'stripeWebhook']);
 
 Route::get('/details-pratiques', [PratiqueController::class, 'index'])->name('details.pratiques');
+
+
+
+
