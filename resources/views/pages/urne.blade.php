@@ -79,17 +79,63 @@
 
         </div>
         
-        <div class="card mt-4 p-4 text-center border-0 shadow-sm" style="background-color: var(--vert-tres-clair);">
-            <p class="fw-bold mb-1" style="color:var(--vert-sapin);">
-                <i class="fa-solid fa-bank me-2"></i> Option Virement Bancaire
-            </p>
-            <p class="mb-0 text-muted" style="font-size:0.95rem;">
-                Si vous préférez, vous pouvez effectuer un virement. <span class="fw-bold">Contactez-nous</span> pour obtenir notre IBAN.
-            </p>
-        </div>
+    <div class="card mt-4 p-4 text-center border-0 shadow-sm" style="background-color: var(--vert-tres-clair);">
+    <p class="fw-bold mb-1" style="color:var(--vert-sapin);">
+        <i class="fa-solid fa-bank me-2"></i> Option Virement Bancaire
+    </p>
+    <p class="mb-2 text-muted" style="font-size:0.95rem;">
+        Vous pouvez effectuer un virement directement à notre IBAN ci-dessous :
+    </p>
+    <div class="iban-box mb-2 p-2 rounded" style="background-color: #ffffff; cursor: pointer;" id="ibanBox">
+        <span id="ibanText">FR55 2004 1010 2001 8599 8H01 753</span>
+        <i class="fa-solid fa-copy ms-2"></i>
+    </div>
+    <small class="text-muted d-block mb-2">Cliquez pour copier l’IBAN et choisir votre application bancaire pour effectuer le virement.</small>
+
+    <p class="fw-bold mt-3" style="color:var(--vert-sapin);">
+        💌 Urne physique disponible
+    </p>
+    <p class="mb-0 text-muted" style="font-size:0.95rem;">
+        Une urne sera également mise à disposition dans la salle pour ceux qui préfèrent contribuer en espèces ou par chèque.
+    </p>
+</div>
 
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+    const ibanBox = document.getElementById('ibanBox');
+    const ibanText = document.getElementById('ibanText');
+
+    ibanBox.addEventListener('click', async function() {
+        const ibanValue = ibanText.innerText;
+
+        // Copier dans le presse-papier
+        try {
+            await navigator.clipboard.writeText(ibanValue);
+        } catch (err) {
+            console.error("Impossible de copier l'IBAN :", err);
+        }
+
+        // Ouvrir le sélecteur d'application (Web Share API)
+        if (navigator.share) {
+            try {
+                await navigator.share({
+                    title: 'IBAN pour virement',
+                    text: `IBAN : ${ibanValue}`,
+                });
+            } catch (err) {
+                console.error("Partage annulé ou non disponible :", err);
+            }
+        } else {
+            alert("IBAN copié ! Veuillez ouvrir votre application bancaire manuellement pour effectuer le virement.");
+        }
+    });
+
+});
+</script>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
