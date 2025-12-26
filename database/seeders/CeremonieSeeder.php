@@ -20,18 +20,33 @@ class CeremonieSeeder extends Seeder
      */
     public function run()
     {
-        // Désactiver la vérification des clés étrangères pour pouvoir tronquer
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        // Pour PostgreSQL, nous devons supprimer les contraintes de clés étrangères temporairement
+        // puis les réactiver après avoir vidé les tables
         
+        // Récupérer toutes les contraintes de clés étrangères
+        $constraints = DB::select("
+            SELECT conname, conrelid::regclass AS table_name
+            FROM pg_constraint
+            WHERE contype = 'f'
+        ");
+        
+        // Désactiver toutes les contraintes de clés étrangères
+        foreach ($constraints as $constraint) {
+            DB::statement("ALTER TABLE {$constraint->table_name} DISABLE TRIGGER ALL");
+        }
+        
+        // Vider les tables
         MemoryCard::truncate();
         Priere::truncate();
         Chant::truncate();
         Lecture::truncate();
         EtapeCeremonie::truncate();
         Remerciement::truncate();
-
-        // Réactiver la vérification des clés étrangères
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        
+        // Réactiver toutes les contraintes de clés étrangères
+        foreach ($constraints as $constraint) {
+            DB::statement("ALTER TABLE {$constraint->table_name} ENABLE TRIGGER ALL");
+        }
 
         // === 1. Création du message de remerciements ===
         Remerciement::create([
@@ -48,7 +63,7 @@ EOT,
         ]);
 
         // === 2. Création des étapes de la cérémonie ===
-        $etape1 = EtapeCeremonie::create(['ordre' => 1, 'titre' => 'OUVERTURE DE LA CÉRÉMONATION', 'icone' => 'fa-solid fa-door-open', 'termine' => true]);
+        $etape1 = EtapeCeremonie::create(['ordre' => 1, 'titre' => 'OUVERTURE DE LA CÉRÉMONIE', 'icone' => 'fa-solid fa-door-open', 'termine' => true]);
         $etape2 = EtapeCeremonie::create(['ordre' => 2, 'titre' => 'DIEU NOUS PARLE', 'icone' => 'fa-solid fa-book-bible', 'en_cours' => true]);
         $etape3 = EtapeCeremonie::create(['ordre' => 3, 'titre' => 'DIEU NOUS UNIT', 'icone' => 'fa-solid fa-hands-praying']);
         $etape4 = EtapeCeremonie::create(['ordre' => 4, 'titre' => 'TOUTE UNE VIE POUR S\'AIMER', 'icone' => 'fa-solid fa-heart']);
