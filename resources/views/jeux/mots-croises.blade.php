@@ -75,12 +75,13 @@
                                     @if($letterNumber == 1)
                                     <span class="cell-number">{{ $motId }}</span>
                                     @endif
-                                    <input type="text" 
-                                           class="cell-input" 
-                                           maxlength="1" 
-                                           name="reponses[{{ $motId }}][{{ $letterNumber - 1 }}]"
-                                           data-x="{{ $x }}"
-                                           data-y="{{ $y }}">
+                                    <!-- NOUVEAU CODE -->
+<input type="text" 
+       class="cell-input" 
+       maxlength="1" 
+       name="grid[{{ $y }}][{{ $x }}]"
+       data-x="{{ $x }}"
+       data-y="{{ $y }}">
                                 </div>
                                 @endif
                                 @endfor

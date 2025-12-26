@@ -191,12 +191,12 @@ public function submitChassePhoto(Request $request)
         return view('jeux.mots-croises', compact('motsCroises', 'sessionActive'));
     }
 
-    public function submitMotsCroises(Request $request)
+   public function submitMotsCroises(Request $request)
 {
     $request->validate([
         'nom' => 'required',
         'prenom' => 'required',
-        'reponses' => 'required|array',
+        'grid' => 'required|array', // On valide la grille
         'session_jeu_id' => 'required|exists:sessions_jeu,id'
     ]);
 
@@ -205,7 +205,6 @@ public function submitChassePhoto(Request $request)
         'prenom' => $request->prenom
     ]);
 
-    // Récupérer la grille de mots croisés
     $motsCroises = MotsCroises::find($request->mots_croises_id);
     
     if (!$motsCroises) {
@@ -213,22 +212,36 @@ public function submitChassePhoto(Request $request)
     }
     
     $mots = $motsCroises->mots;
-    
+    $userGrid = $request->grid; // La grille remplie par l'utilisateur
+
     $score = 0;
     $total = $mots->count();
-    
-    foreach ($request->reponses as $motId => $reponse) {
-        // Vérifier que la réponse est une chaîne de caractères
-        if (is_array($reponse)) {
-            $reponse = implode('', $reponse); // Si c'est un tableau, le convertir en chaîne
+
+    // On parcourt chaque mot défini dans la BDD pour le vérifier
+    foreach ($mots as $mot) {
+        $userWord = ''; // Le mot reconstruit depuis la grille de l'utilisateur
+
+        if ($mot->direction === 'horizontal') {
+            // On récupère les lettres horizontalement
+            for ($i = 0; $i < strlen($mot->mot); $i++) {
+                $x = $mot->position_x + $i;
+                $y = $mot->position_y;
+                // On vérifie si la lettre existe dans la grille de l'utilisateur
+                $userWord .= $userGrid[$y][$x] ?? '';
+            }
+        } else { // vertical
+            // On récupère les lettres verticalement
+            for ($i = 0; $i < strlen($mot->mot); $i++) {
+                $x = $mot->position_x;
+                $y = $mot->position_y + $i;
+                // On vérifie si la lettre existe dans la grille de l'utilisateur
+                $userWord .= $userGrid[$y][$x] ?? '';
+            }
         }
         
-        $mot = $mots->where('id', $motId)->first();
-        if ($mot && !empty($reponse)) {
-            // Comparaison insensible à la casse
-            if (strtolower(trim($reponse)) === strtolower($mot->mot)) {
-                $score++;
-            }
+        // On compare le mot reconstruit avec le mot correct
+        if (strtolower(trim($userWord)) === strtolower($mot->mot)) {
+            $score++;
         }
     }
 
