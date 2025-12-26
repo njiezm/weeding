@@ -189,8 +189,7 @@
 <div class="debug-info">
     <strong>Informations de débogage (à supprimer en production) :</strong><br>
     APP_URL: {{ config('app.url') }}<br>
-    Lien symbolique public/storage: @if(file_exists(public_path('storage'))) Existe @else N'existe pas @endif<br>
-    Permissions du dossier storage/app/public: {{ substr(sprintf('%o', fileperms(storage_path('app/public'))), -4) }}
+    Lien symbolique public/storage: @if(file_exists(public_path('storage'))) Existe @else N'existe pas @endif
 </div>
 
 <div class="row g-4">
@@ -199,14 +198,12 @@
         <div class="card photo-item-card h-100">
             <!-- URL générée pour le débogage -->
             @php
-                $imageUrl = Storage::url($photo->path);
-                $fullPath = storage_path('app/public/' . $photo->path);
-                $fileExists = file_exists($fullPath);
+                $imageUrl = asset('storage/' . $photo->path);
             @endphp
             
             <!-- Afficher l'image avec une URL absolue -->
             <img
-                src="{{ url($imageUrl) }}"
+                src="{{ $imageUrl }}"
                 class="card-img-top"
                 alt="photo mariage"
                 onerror="this.src='https://via.placeholder.com/300x300.png?text=Photo+non+disponible'">
@@ -218,8 +215,7 @@
                 <!-- Informations de débogage pour cette image -->
                 <div class="debug-info mt-2">
                     URL: {{ $imageUrl }}<br>
-                    Chemin complet: {{ $fullPath }}<br>
-                    Fichier existe: @if($fileExists) Oui @else Non @endif
+                    Chemin DB: {{ $photo->path }}
                 </div>
             </div>
         </div>
