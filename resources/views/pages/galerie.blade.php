@@ -186,11 +186,11 @@
 </h3>
 
 <!-- Information de débogage -->
-<div class="debug-info">
+<!--div class="debug-info">
     <strong>Informations de débogage (à supprimer en production) :</strong><br>
     APP_URL: {{ config('app.url') }}<br>
     Lien symbolique public/storage: @if(file_exists(public_path('storage'))) Existe @else N'existe pas @endif
-</div>
+</!--div-->
 
 <div class="row g-4">
 @foreach($photos as $photo)
@@ -208,10 +208,10 @@
                     Par {{ $photo->participant->prenom }}
                 </small>
                 <!-- Informations de débogage pour cette image -->
-                <div class="debug-info mt-2">
+                <!--div class="debug-info mt-2">
                     URL: https://gilles-et-maeva.njiezm.fr/storage/{{ $photo->path }}<br>
                     Chemin DB: {{ $photo->path }}
-                </div>
+                </!--div-->
             </div>
         </div>
     </div>
