@@ -179,7 +179,7 @@
     <div class="col-6 col-md-4 col-lg-3">
         <div class="card photo-item-card h-100">
             <img
-                src="{{ URL::to('/storage/' . $photo->path) }}"
+                src="{{ asset('storage/' . $photo->path) }}"
                 class="card-img-top"
                 alt="photo mariage"
                 onerror="this.src='https://via.placeholder.com/300x300.png?text=Photo+non+disponible'">
