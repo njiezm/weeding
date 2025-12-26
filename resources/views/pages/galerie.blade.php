@@ -196,14 +196,9 @@
 @foreach($photos as $photo)
     <div class="col-6 col-md-4 col-lg-3">
         <div class="card photo-item-card h-100">
-            <!-- URL générée pour le débogage -->
-            @php
-                $imageUrl = asset('storage/' . $photo->path);
-            @endphp
-            
-            <!-- Afficher l'image avec une URL absolue -->
+            <!-- Utiliser une URL absolue avec le domaine correct -->
             <img
-                src="{{ $imageUrl }}"
+                src="https://gilles-et-maeva.njiezm.fr/storage/{{ $photo->path }}"
                 class="card-img-top"
                 alt="photo mariage"
                 onerror="this.src='https://via.placeholder.com/300x300.png?text=Photo+non+disponible'">
@@ -214,7 +209,7 @@
                 </small>
                 <!-- Informations de débogage pour cette image -->
                 <div class="debug-info mt-2">
-                    URL: {{ $imageUrl }}<br>
+                    URL: https://gilles-et-maeva.njiezm.fr/storage/{{ $photo->path }}<br>
                     Chemin DB: {{ $photo->path }}
                 </div>
             </div>
