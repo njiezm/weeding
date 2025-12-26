@@ -63,7 +63,7 @@ Route::get('/jeux/resultats-memory', [JeuxController::class, 'resultatsMemory'])
 
 
 // Routes pour l'administration
-Route::prefix('admin')->name('admin.')->group(function () {
+Route::prefix('admin190964')->name('admin.')->group(function () {
     Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
     
     // Gestion des questions
