@@ -10,7 +10,8 @@ use App\Models\Chant;
 use App\Models\Priere;
 use App\Models\Remerciement;
 use App\Models\MemoryCard;
-use App\Models\Participant;
+// Le modèle Participant n'est pas utilisé car la table n'est pas définie dans les migrations fournies.
+// use App\Models\Participant;
 
 class CeremonieSeeder extends Seeder
 {
@@ -21,13 +22,19 @@ class CeremonieSeeder extends Seeder
      */
     public function run()
     {
+        // Désactiver la vérification des clés étrangères pour pouvoir tronquer les tables
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+
         MemoryCard::truncate();
         Priere::truncate();
         Chant::truncate();
         Lecture::truncate();
         EtapeCeremonie::truncate();
         Remerciement::truncate();
-        
+
+        // Réactiver la vérification des clés étrangères
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
         // === 1. Création du message de remerciements ===
         Remerciement::create([
             'titre' => 'Remerciements',
@@ -52,12 +59,10 @@ EOT,
         $etape5 = EtapeCeremonie::create(['ordre' => 5, 'titre' => 'REMERCIEMENTS', 'icone' => 'fa-solid fa-champagne-glasses']);
 
         // === 3. Création des lectures, chants et prières associés ===
+        // NOTE: Les "sous-étapes" du livret (ex: "Procession d'entrée") ne sont pas créées
+        // car la structure de la BDD ne le permet pas. Les éléments sont rattachés directement aux étapes principales.
 
         // --- Étape 1: OUVERTURE ---
-        $etape1->sousEtapes()->create(['ordre' => 1, 'titre' => 'Procession d\'entrée du futur marié et de la future mariée']);
-        $etape1->sousEtapes()->create(['ordre' => 2, 'titre' => 'Chant d\'entrée']);
-        $etape1->sousEtapes()->create(['ordre' => 3, 'titre' => 'Mot d\'accueil du prêtre']);
-
         $etape1->chants()->create([
             'titre' => 'Que tes œuvres sont belles',
             'auteur' => 'Traditionnel',
@@ -80,12 +85,6 @@ EOT,
         ]);
 
         // --- Étape 2: DIEU NOUS PARLE ---
-        $etape2->sousEtapes()->create(['ordre' => 1, 'titre' => 'Première lecture']);
-        $etape2->sousEtapes()->create(['ordre' => 2, 'titre' => 'Psaumes']);
-        $etape2->sousEtapes()->create(['ordre' => 3, 'titre' => 'Acclamation']);
-        $etape2->sousEtapes()->create(['ordre' => 4, 'titre' => 'Évangile']);
-        $etape2->sousEtapes()->create(['ordre' => 5, 'titre' => 'Homélie']);
-
         $etape2->lectures()->create([
             'titre' => 'Lecture du Livre de la Genèse',
             'reference' => 'Genèse 1, 26-28.31a',
@@ -138,15 +137,6 @@ EOT,
         ]);
 
         // --- Étape 3: DIEU NOUS UNIT ---
-        $etape3->sousEtapes()->create(['ordre' => 1, 'titre' => 'Chant à l\'Esprit Saint']);
-        $etape3->sousEtapes()->create(['ordre' => 2, 'titre' => 'Dialogue initial']);
-        $etape3->sousEtapes()->create(['ordre' => 3, 'titre' => 'Échange des consentements']);
-        $etape3->sousEtapes()->create(['ordre' => 4, 'titre' => 'Bénédiction et échange des alliances']);
-        $etape3->sousEtapes()->create(['ordre' => 5, 'titre' => 'Bénédiction nuptiale']);
-        $etape3->sousEtapes()->create(['ordre' => 6, 'titre' => 'Chant de louange']);
-        $etape3->sousEtapes()->create(['ordre' => 7, 'titre' => 'Prière des époux']);
-        $etape3->sousEtapes()->create(['ordre' => 8, 'titre' => 'Prière de l\'Église']);
-
         $etape3->chants()->create([
             'titre' => 'Viens, Esprit du Dieu vivant',
             'auteur' => 'H. Le Bars',
@@ -185,14 +175,6 @@ Maëva : Oui je le veux.
 Et toi, Gilles veux-tu être mon mari ?
 Gilles : Oui je le veux. Moi, Gilles je te reçois Maëva comme femme et je serai ton mari Gilles. Je promets de t'aimer fidèlement dans le bonheur et dans les épreuves tout au long de notre vie.
 Maëva : Moi, Maëva je te reçois Gilles comme mari et je serai ta femme Maëva. Je promets de t'aimer fidèlement dans le bonheur et dans les épreuves tout au long de notre vie.
-Gilles : Maëva reçois cette alliance, signe de mon amour et de ma fidélité. (Au nom du Père, et du Fils, et du Saint-Esprit.)
-Maëva : Gilles reçois cette alliance, signe de mon amour et de ma fidélité. (Au nom du Père, et du Fils, et du Saint-Esprit.)
-EOT,
-        ]);
-
-        $etape3->prieres()->create([
-            'titre' => 'Bénédiction et échange des alliances',
-            'contenu' => <<<'EOT'
 Gilles : Maëva reçois cette alliance, signe de mon amour et de ma fidélité. (Au nom du Père, et du Fils, et du Saint-Esprit.)
 Maëva : Gilles reçois cette alliance, signe de mon amour et de ma fidélité. (Au nom du Père, et du Fils, et du Saint-Esprit.)
 EOT,
@@ -258,11 +240,6 @@ EOT,
         ]);
 
         // --- Étape 4: TOUTE UNE VIE POUR S'AIMER ---
-        $etape4->sousEtapes()->create(['ordre' => 1, 'titre' => 'Notre Père']);
-        $etape4->sousEtapes()->create(['ordre' => 2, 'titre' => 'Bénédiction finale']);
-        $etape4->sousEtapes()->create(['ordre' => 3, 'titre' => 'Chant signatures des registres et quête']);
-        $etape4->sousEtapes()->create(['ordre' => 4, 'titre' => 'Consécration à la Vierge']);
-
         $etape4->prieres()->create([
             'titre' => 'Notre Père',
             'contenu' => <<<'EOT'
@@ -339,9 +316,6 @@ EOT,
         ]);
 
         // --- Étape 5: REMERCIEMENTS ---
-        $etape5->sousEtapes()->create(['ordre' => 1, 'titre' => 'Chant d\'envoi']);
-        $etape5->sousEtapes()->create(['ordre' => 2, 'titre' => 'Remerciements']);
-
         $etape5->chants()->create([
             'titre' => 'Que ma bouche chante tes louanges',
             'auteur' => 'J.P. Lécot',
