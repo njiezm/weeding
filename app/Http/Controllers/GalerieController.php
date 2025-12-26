@@ -18,27 +18,27 @@ class GalerieController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $request->validate([
-            'nom' => 'required|string|max:100',
-            'prenom' => 'required|string|max:100',
-            'photo' => 'required|image|max:5120', // 5 Mo
-        ]);
+{
+    $request->validate([
+        'nom' => 'required|string|max:100',
+        'prenom' => 'required|string|max:100',
+        'photo' => 'required|image|max:5120',
+    ]);
 
-        // Identification légère
-        $participant = Participant::firstOrCreate([
-            'nom' => $request->nom,
-            'prenom' => $request->prenom,
-        ]);
+    $participant = Participant::firstOrCreate([
+        'nom' => $request->nom,
+        'prenom' => $request->prenom,
+    ]);
 
-        // Stockage
-        $path = $request->file('photo')->store('galerie', 'public');
+    // 🔥 stockage PRIVÉ (pas accessible directement)
+    $path = $request->file('photo')->store('galerie');
 
-        Photo::create([
-            'participant_id' => $participant->id,
-            'path' => $path,
-        ]);
+    Photo::create([
+        'participant_id' => $participant->id,
+        'path' => $path, // ex: galerie/abc123.jpg
+    ]);
 
-        return redirect()->back()->with('success', 'Photo ajoutée 📸');
-    }
+    return back()->with('success', 'Photo ajoutée 📸');
+}
+
 }
