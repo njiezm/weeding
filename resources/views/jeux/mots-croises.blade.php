@@ -137,7 +137,7 @@
 
 .crossword-cell {
     width: 30px;
-    height: 30px;
+    /*height: 30px;*/
     border: 1px solid #ccc;
     position: relative;
 }
