@@ -60,7 +60,14 @@
                 <p><i class="fa-solid fa-bell me-2 text-dore-accent"></i> <strong>Début Précis de la Cérémonie :</strong> 14h00</p>
                 <p class="mt-3">
                     <i class="fa-solid fa-map-pin me-2 text-dore-accent"></i> Adresse : 36 Rue Schoelcher, Le Lamentin 97232, Martinique.
-                    <a href="#" class="btn btn-sm ms-3" style="background-color: var(--vert-sapin); color: var(--champagne-clair);">Voir sur la carte</a>
+<a 
+  href="geo:0,0?q=36 Rue Schoelcher, Le Lamentin 97232"
+  class="btn btn-sm ms-3"
+  style="background-color: var(--vert-sapin); color: var(--champagne-clair);"
+>
+    <i class="fa-solid fa-map-location-dot me-1"></i>
+    Voir sur la carte
+</a>
                 </p>
             </div>
         </div>
