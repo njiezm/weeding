@@ -55,7 +55,7 @@
     <div class="row mt-4">
         <div class="col-lg-8 mx-auto">
             <div class="location-card text-center mb-5">
-                <h4 class="fw-bold" style="color:var(--vert-sapin);">Église Sainte-Laurent du Lamentin</h4>
+                <h4 class="fw-bold" style="color:var(--vert-sapin);">Église Saint-Laurent du Lamentin</h4>
                 <p class="mb-1"><i class="fa-solid fa-clock me-2 text-dore-accent"></i> <strong>Heure d'arrivée des invités :</strong> 13h30</p>
                 <p><i class="fa-solid fa-bell me-2 text-dore-accent"></i> <strong>Début Précis de la Cérémonie :</strong> 14h00</p>
                 <p class="mt-3">
