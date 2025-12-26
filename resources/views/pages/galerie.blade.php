@@ -198,7 +198,7 @@
         <div class="card photo-item-card h-100">
             <!-- Utiliser une URL absolue avec le domaine correct -->
             <img
-                src="https://gilles-et-maeva.njiezm.fr/storage/{{ $photo->path }}"
+                src="{{ Storage::url($photo->path) }}" alt="Photo"
                 class="card-img-top"
                 alt="photo mariage"
                 onerror="this.src='https://via.placeholder.com/300x300.png?text=Photo+non+disponible'">
