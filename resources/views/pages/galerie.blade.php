@@ -109,6 +109,9 @@
     {{ session('success') }}
 </div>
 @endif
+@php
+use Illuminate\Support\Facades\Storage;
+@endphp
 
 <div class="upload-card">
     <h4 class="text-center mb-4 fw-bold" style="color:var(--vert-sapin);">
@@ -208,10 +211,10 @@
                     Par {{ $photo->participant->prenom }}
                 </small>
                 <!-- Informations de débogage pour cette image -->
-                <div class="debug-info mt-2">
+                <!--div class="debug-info mt-2">
                     URL: https://gilles-et-maeva.njiezm.fr/storage/{{ $photo->path }}<br>
                     Chemin DB: {{ $photo->path }}
-                </div>
+                </!--div-->
             </div>
         </div>
     </div>
