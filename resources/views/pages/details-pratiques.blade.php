@@ -44,10 +44,10 @@
             Martinique Taxi
         </a>
         <br>
-        Téléphone : <a href="tel:+59659636362" class="text-decoration-none">+596 596 63 63 62</a>
+        Téléphone : <a href="tel:+596596636362" class="text-decoration-none">+596 596 63 63 62</a>
 
         <div class="text-center mt-3">
-        <a href="https://wa.me/59659636362"
+        <a href="https://wa.me/596596636362"
            target="_blank"
            class="btn btn-success rounded-pill px-4">
             <i class="fa-brands fa-whatsapp me-2"></i>
