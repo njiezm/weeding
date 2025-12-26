@@ -68,6 +68,7 @@
     <i class="fa-solid fa-map-location-dot me-1"></i>
     Voir sur la carte
 </a>
+<br>
     <a href="https://online.fliphtml5.com/IMPAKT-STUDIO/clff/" class="btn btn-sm ms-3" style="background-color: var(--vert-sapin); color: var(--champagne-clair);">
         <i class="fa-solid fa-file-pdf me-1"></i>
         Ouvrir le livret PDF
