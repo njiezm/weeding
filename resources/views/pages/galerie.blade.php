@@ -87,6 +87,17 @@
     .photo-preview.active {
         display: block;
     }
+    
+    .debug-info {
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 4px;
+        padding: 10px;
+        margin-bottom: 15px;
+        font-family: monospace;
+        font-size: 12px;
+        color: #6c757d;
+    }
 </style>
 
 <h2 class="gallery-heading text-center">
@@ -174,20 +185,42 @@
     <i class="fa-solid fa-camera me-2 text-dore-accent"></i> Les clichés de nos invités
 </h3>
 
+<!-- Information de débogage -->
+<div class="debug-info">
+    <strong>Informations de débogage (à supprimer en production) :</strong><br>
+    APP_URL: {{ config('app.url') }}<br>
+    Lien symbolique public/storage: @if(file_exists(public_path('storage'))) Existe @else N'existe pas @endif<br>
+    Permissions du dossier storage/app/public: {{ substr(sprintf('%o', fileperms(storage_path('app/public'))), -4) }}
+</div>
+
 <div class="row g-4">
 @foreach($photos as $photo)
     <div class="col-6 col-md-4 col-lg-3">
         <div class="card photo-item-card h-100">
+            <!-- URL générée pour le débogage -->
+            @php
+                $imageUrl = Storage::url($photo->path);
+                $fullPath = storage_path('app/public/' . $photo->path);
+                $fileExists = file_exists($fullPath);
+            @endphp
+            
+            <!-- Afficher l'image avec une URL absolue -->
             <img
-    src="{{ Storage::url($photo->path) }}"
-    class="card-img-top"
-    alt="photo mariage"
-    onerror="this.src='https://via.placeholder.com/300x300.png?text=Photo+non+disponible'">
+                src="{{ url($imageUrl) }}"
+                class="card-img-top"
+                alt="photo mariage"
+                onerror="this.src='https://via.placeholder.com/300x300.png?text=Photo+non+disponible'">
 
             <div class="card-body p-2 text-center">
                 <small class="text-muted photo-meta">
                     Par {{ $photo->participant->prenom }}
                 </small>
+                <!-- Informations de débogage pour cette image -->
+                <div class="debug-info mt-2">
+                    URL: {{ $imageUrl }}<br>
+                    Chemin complet: {{ $fullPath }}<br>
+                    Fichier existe: @if($fileExists) Oui @else Non @endif
+                </div>
             </div>
         </div>
     </div>
