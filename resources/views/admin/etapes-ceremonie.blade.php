@@ -159,7 +159,7 @@ DESCRIPTION : Bénédiction finale, chant d’envoi et remerciements.
                                 <tr>
                                     <td>{{ $etape->ordre }}</td>
                                     <td>{{ $etape->titre }}</td>
-                                    <td>{{ Str::limit($etape->description, 100) }}</td>
+                                    <td>{{ \Illuminate\Support\Str::limit($etape->description, 100) }}</td>
                                     <td>
                                         @if($etape->icone)
                                             <i class="{{ $etape->icone }}"></i>
