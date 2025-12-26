@@ -30,6 +30,9 @@ $menuItems = [
     // Ajoutez ces éléments au tableau $menuItems
     ['Mots Croisés', '/jeux/mots-croises', 'fa-puzzle-piece', 'Testez vos connaissances !', 'col-sm-6 col-md-4'],
     ['Memory', '/jeux/memory', 'fa-brain', 'Retrouvez les paires de photos !', 'col-sm-6 col-md-4'],
+
+    // Bloc pour les défus
+    ['Une pensée pour ...', '/pensée-pour', 'fa-regular fa-dove', 'Hommage à nos proches absents.', 'col-sm-6 col-md-4'],
 ];
 @endphp
 

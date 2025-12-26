@@ -8,6 +8,7 @@ use App\Http\Controllers\UrneController;
 use App\Http\Controllers\PratiqueController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\QrCodeController;
+use App\Http\Controllers\PageController;
 
 
 Route::get('/', fn() => view('landing'))->name('landing');
@@ -21,7 +22,7 @@ Route::view('/notre-histoire', 'pages.histoire');
 Route::view('/ceremonie-religieuse', 'pages.ceremonie');
 Route::view('/mairie', 'pages.mairie');
 Route::view('/menu', 'pages.menu');
-
+Route::get('/pensée-pour', [PageController::class, 'penseePour'])->name('pensee.pour');
 
 
 //Route::view('/galerie', 'pages.galerie');
