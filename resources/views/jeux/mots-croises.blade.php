@@ -126,7 +126,7 @@
 <style>
 /* ... Vos styles CSS restent les mêmes ... */
 .crossword-grid {
-    display: inline-block;
+    /*display: inline-block;*/
     border: 2px solid #333;
     margin-bottom: 20px;
 }
