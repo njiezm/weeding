@@ -157,11 +157,37 @@
                 Votre confort est notre priorité. Veuillez nous informer de toute allergie ou besoin alimentaire non couvert par les options ci-dessus.
             </p>
 
-            <div class="text-center mt-3">
-                <a href="/contact" class="btn btn-dore-accent">
-                    <i class="fa-solid fa-envelope me-2"></i> Nous Contacter
-                </a>
-            </div>
+            <div class="text-center mt-4">
+
+    <!-- Titre -->
+    <h5 class="fw-bold mb-3" style="color: var(--vert-sapin); font-family:var(--font-pro);">
+        <i class="fa-solid fa-envelope-open-text me-2 text-dore-accent"></i>
+        Nous contacter
+    </h5>
+
+    <hr class="mx-auto mb-4" style="width:120px; opacity:0.3;">
+
+    <!-- Options -->
+    <div class="d-flex justify-content-center gap-3 flex-wrap">
+
+        <a href="mailto:njiezamon10@gmail.com?subject=Question concernant le mariage"
+           class="btn btn-dore-accent px-4">
+            <i class="fa-solid fa-envelope me-2"></i> Email
+        </a>
+
+        <a href="https://wa.me/596696703922?text=Bonjour,%20nous%20avons%20une%20question%20concernant%20le%20mariage"
+           target="_blank"
+           class="btn btn-success px-4">
+            <i class="fa-brands fa-whatsapp me-2"></i> WhatsApp
+        </a>
+
+        <a href="tel:+596696703922"
+           class="btn btn-outline-dark px-4">
+            <i class="fa-solid fa-phone me-2"></i> Appeler
+        </a>
+
+    </div>
+</div>
 
         </div>
 
