@@ -63,8 +63,12 @@
                                 <img src="{{ asset('images/memory-back.jpg') }}" alt="Carte mémoire">
                             </div>
                             <div class="memory-card-back">
-                                <img src="{{ asset($card->image_url) }}" alt="{{ $card->titre }}">
-                            </div>
+    @if(strpos($card->image_path, 'public/') === 0)
+        <img src="{{ asset(str_replace('public/', 'storage/', $card->image_path)) }}" alt="{{ $card->titre }}">
+    @else
+        <img src="{{ asset($card->image_path) }}" alt="{{ $card->titre }}">
+    @endif
+</div>
                         </div>
                     </div>
                     @endforeach
