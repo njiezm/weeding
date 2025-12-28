@@ -12,6 +12,7 @@ use App\Models\MotCroise;
 use App\Models\MemoryCard;
 use App\Models\QrCode;
 use App\Models\QrCodeScan;
+use App\Models\Participant;
 
 
 class AdminController extends Controller
@@ -35,7 +36,11 @@ class AdminController extends Controller
     $memoryCardsCount = MemoryCard::count() / 2;
     
     // Compter les participants (à adapter selon votre modèle)
-    $participantsCount = 0; // Remplacez par votre logique si vous avez un modèle Participant
+    //$participants = Participant::all();
+    $participantsCount = Participant::count();
+
+        // =====================================================
+        // Nouvelles statistiques pour les QR Codes
     
      $qrCodesCount = QrCode::count();
         $totalScansCount = QrCodeScan::count();
