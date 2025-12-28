@@ -15,16 +15,14 @@ class MemoryCard extends Model
         'actif'
     ];
 
-    // Dans app/Models/MemoryCard.php
+    /**
+     * Obtenir l'URL complète de l'image.
+     */
+    public function getImageUrlAttribute()
+    {
+        return ($this->image_path);
+    }
 
-/**
- * Obtenir l'URL complète de l'image.
- */
-public function getImageUrlAttribute()
-{
-    // asset() génère la bonne URL pour un fichier dans le dossier public
-    return asset($this->image_path);
-}
     /**
      * Obtenir la paire de cette carte.
      */
